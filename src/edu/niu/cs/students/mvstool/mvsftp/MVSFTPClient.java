@@ -60,13 +60,25 @@ public class MVSFTPClient extends FTPClient {
     
   }
   
+  private void goodJob(Job job) throws FTPException {
+    
+    if(job.getStatus().equals("ACTIVE")){
+      throw new FTPException("Cannot get active jobs, please wait for the job to terminate!");
+    }
+    
+  }
+  
   public void getJobOutput(Job job) throws IOException, FTPException {
+    
+    goodJob(job);    
     setModeJES();    
     get(job.getID(), 'A');
     
   }
   
   public void getJobOutput(Job job, FTPOutputStream out) throws IOException, FTPException {
+    
+    goodJob(job);
     setModeJES();
     get(job.getID(), 'A', out);
   }

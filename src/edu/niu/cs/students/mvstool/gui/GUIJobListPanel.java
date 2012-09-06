@@ -13,6 +13,7 @@ import java.awt.event.MouseAdapter;
 
 import javax.swing.JPanel;
 import javax.swing.JTable;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 
 
@@ -75,6 +76,7 @@ class GUIJobListPanel extends JPanel {
            
     } catch(Exception e){
       
+      JOptionPane.showMessageDialog(this, e.getMessage());
       e.printStackTrace();
       
     }
@@ -117,6 +119,7 @@ class GUIJobListPanel extends JPanel {
            
     } catch(Exception e){
       
+      JOptionPane.showMessageDialog(this, e.getMessage());
       e.printStackTrace();
       
     }

@@ -34,7 +34,7 @@ import edu.niu.cs.students.mvstool.ftp.FTPListParser;
 public abstract class MVSJobListParser implements FTPListParser {
   
   public static final String[] JobNames = {
-    "Name", "ID", "Owner", "Status", "Class", "Return Code", "Details"
+    "Name", "ID", "Owner", "Status", "Class", "Details"
   };
   
   public final class Job {
@@ -45,9 +45,9 @@ public abstract class MVSJobListParser implements FTPListParser {
     static final int ID     = 1;
     static final int Owner  = 2;
     static final int Status = 3;
-    static final int Class  = 4;
-    static final int RC     = 5;
-    static final int Dets   = 6;
+//    static final int Class  = 4;
+//    static final int RC     = 5;
+    static final int Dets   = 4;
     
     
     
@@ -73,20 +73,19 @@ public abstract class MVSJobListParser implements FTPListParser {
       return details[Status];
     }
     
-    public String getclass(){
-      return details[Class];
-    }
-    
-    public String getReturnCode(){
-      return details[RC];
-    }
+//    public String getclass(){
+//      return details[Class];
+//    }
+//    
+//    public String getReturnCode(){
+//      return details[RC];
+//    }
     
     public String toString(){
       
       String format = 
-        "<MVSJob(Name: %s, ID: %s, Owner: %s, Status: %s, Class: %s, ReturnCode: %s)>";
-      return String.format(format, getName(), getID(), getOwner(), getStatus(), 
-                           getclass(), getReturnCode());
+        "<MVSJob(Name: %s, ID: %s, Owner: %s, Status: %s)>";
+      return String.format(format, getName(), getID(), getOwner(), getStatus());
       
     }
     
@@ -97,7 +96,7 @@ public abstract class MVSJobListParser implements FTPListParser {
   }
   
   private static final String _p =
-    "([A-Z0-9]+) +([A-Z0-9]+) +([A-Z0-9]+) +([A-Z]+) +([A-Z0-9]+) +RC=([0-9]+) +(.*)$";
+    "([A-Z0-9]+) +([A-Z0-9]+) +([A-Z0-9]+) +([A-Z]+) +([A-Z0-9]+).*$"; // +RC=([0-9]+) +(.*)$";
   
   private static final Pattern jobPattern = Pattern.compile(_p);
   
@@ -122,6 +121,10 @@ public abstract class MVSJobListParser implements FTPListParser {
     ******************************************************************************/
   public void parseLine(String line){
     
+    if(line.trim().equals("JOBNAME  JOBID    OWNER    STATUS CLASS")){
+      return;
+    }
+    
     String[] jobInfo = new String[7];
     
     Matcher matcher = jobPattern.matcher(line.trim());
@@ -132,15 +135,18 @@ public abstract class MVSJobListParser implements FTPListParser {
       
       System.out.println("match found!");
       
-      for(int i = 1; i < matcher.groupCount(); i++){
+      int i;
+      
+      for(i = 1; i <= matcher.groupCount(); i++){
           
-        //System.out.println("group(" + i + "): '" + matcher.group(i) + "'");
+        System.out.println("group(" + i + "): '" + matcher.group(i) + "'");
         jobInfo[i -1] = matcher.group(i);
           
       }
       
+      i--;
       
-      jobInfo[6] = line.substring(matcher.end(6), line.length()).trim();
+      jobInfo[i] = line.substring(matcher.end(i), line.length()).trim();
       
       Job job = new Job(jobInfo);
       
