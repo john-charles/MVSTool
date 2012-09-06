@@ -1,8 +1,7 @@
 package edu.niu.cs.students.mvstool.gui;
 
-import java.awt.Insets;
-import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -10,13 +9,10 @@ import java.awt.event.ActionListener;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JButton;
-import javax.swing.BoxLayout;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 
-import javax.swing.border.EmptyBorder;
-
-import edu.niu.cs.students.mvstool.gui.MVSJobList;
+import edu.niu.cs.students.mvstool.gui.GUIJobListPanel;
 import edu.niu.cs.students.mvstool.ConnectionProfile;
 
 class ConnectionPanel extends JPanel {
@@ -26,11 +22,11 @@ class ConnectionPanel extends JPanel {
   JTextField username;
   JPasswordField password;
   
-  MVSJobList jobList;
+  GUIJobListPanel jobList;
   
-  public ConnectionPanel(MVSJobList jobList){
+  public ConnectionPanel(GUIJobListPanel jobList){
     
-    Dimension size = new Dimension(650, 60);
+    //Dimension size = new Dimension(650, 60);
     ConnectionProfile profile = ConnectionProfile.getConnectionProfile();
     
     this.jobList = jobList;
@@ -41,62 +37,44 @@ class ConnectionPanel extends JPanel {
     username = new JTextField(profile.getUsername());
     password = new JPasswordField(profile.getPassword());
     
-    setBorder(new EmptyBorder(new Insets(10, 10, 10, 10)));
+    //setBorder(new EmptyBorder(new Insets(10, 10, 10, 10)));
+    setLayout(new BorderLayout());
+    
+    add(buildLeftInputArea(), BorderLayout.WEST);
+    add(buildRightInputArea(), BorderLayout.CENTER);
+    add(buildConnectionTrigger(), BorderLayout.EAST);
     
     
-    add(buildConnectionArea());    
-    add(buildConnectionTrigger());
-    
-    setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
-    setPreferredSize(size);
-    setMaximumSize(size);
+    //setPreferredSize(size);
+    //setMaximumSize(size);
     
   }
   
+  private JPanel buildLeftInputArea(){
+    
+    JPanel area = new JPanel(new GridLayout(2, 4));
+   
+    area.add(new JLabel("Hostname"));
+    area.add(hostname);
+    
+    area.add(new JLabel("Username"));
+    area.add(username);
+    
+    return area;
+    
+  }
   
-  private JPanel buildConnectionArea(){
+  private JPanel buildRightInputArea(){
     
-    JPanel entryArea = new JPanel();
-    JPanel entryHUArea = new JPanel();
-    JPanel entryPPArea = new JPanel();
+    JPanel area = new JPanel(new GridLayout(2, 4));
     
-    JPanel usernameArea = new JPanel(new GridLayout(1,2));
-    JPanel hostnameArea = new JPanel(new GridLayout(1,2));
-    JPanel passwordArea = new JPanel(new GridLayout(1,2));
-    JPanel hostportArea = new JPanel(new GridLayout(1,2));
+    area.add(new JLabel("Port"));
+    area.add(hostport);
     
+    area.add(new JLabel("Password"));
+    area.add(password);
     
-    
-    
-    entryArea.setLayout(new BoxLayout(entryArea, BoxLayout.X_AXIS));
-    
-    entryHUArea.setLayout(new BoxLayout(entryHUArea, BoxLayout.Y_AXIS));
-    entryPPArea.setLayout(new BoxLayout(entryPPArea, BoxLayout.Y_AXIS));
-    
-    //entryArea.setBorder(new EmptyBorder(new Insets(10, 10, 10, 10)));
-    
-    hostnameArea.add(new JLabel("Hostname:"));
-    hostnameArea.add(hostname);
-    
-    hostportArea.add(new JLabel("Port:"));
-    hostportArea.add(hostport);
-    
-    usernameArea.add(new JLabel("Username:"));
-    usernameArea.add(username);
-    
-    passwordArea.add(new JLabel("Password:"));
-    passwordArea.add(password);
-    
-    entryHUArea.add(hostnameArea);
-    entryHUArea.add(usernameArea);
-    
-    entryPPArea.add(hostportArea);
-    entryPPArea.add(passwordArea);
-    
-    entryArea.add(entryHUArea);
-    entryArea.add(entryPPArea);
-    
-    return entryArea;
+    return area;
     
   }
   

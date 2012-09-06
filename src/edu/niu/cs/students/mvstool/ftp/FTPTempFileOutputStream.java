@@ -1,4 +1,5 @@
 package edu.niu.cs.students.mvstool.ftp;
+
 /*********************************************************************************
   *                                                                              *
   * Copyright (c) 2012 John-Charles D. Sokolow                                   *
@@ -23,66 +24,62 @@ package edu.niu.cs.students.mvstool.ftp;
   *       SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 *
   *                                                                              *
   * ******************************************************************************/
+
+import java.io.File;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.FileOutputStream;
 
-import java.net.Socket;
-import java.net.InetSocketAddress;
+import edu.niu.cs.students.mvstool.ftp.FTPOutputStream;
 
-public class FTPPasvSocket extends Socket {
+public class FTPTempFileOutputStream extends FTPOutputStream {
   
-  public FTPPasvSocket(String pasvResponse) throws IOException {
-    super();
+  private File tempFile;
+  private OutputStream out;
+  
+  public FTPTempFileOutputStream() throws IOException {
     
-    connect(parsePASVAddress(pasvResponse));
+    tempFile = File.createTempFile("ftpGet",".dat");
+    out = new FileOutputStream(tempFile);
     
   }
   
-  private InetSocketAddress parsePASVAddress(String resp){
+  public File getTempFile(){
     
-    int port1;
-    int port2;
+    return tempFile;
     
-    String[] info;
-       
-    int port;
-    String hostname = new String();
+  }
+  
+  public String toString(){
+    return String.format("<FTPTempFileOutputStream(%s)>", tempFile.toString());
+  }
+  
+  public void write(int b) throws IOException {
+    out.write(b);    
+  }
+  
+  public void success(){
     
+    System.out.println("Download complete!");
     
-    while(!resp.startsWith("(")){
-      
-      resp = resp.substring(1, resp.length());
-      
-    }
+  }
+  
+  public void failure(Exception e){
     
+    e.printStackTrace();
     
-    resp = resp.replace("(","");
-    resp = resp.replace(")","");
-    resp = resp.replace(".","");
-      
-    info = resp.split(",");
+  }
+  
+  public void close() throws IOException {
+    out.close();
+  }
+  
+  public static void main(String[] args) throws Exception {
     
-    for(int i = 0; i < 4; i++){
-      
-      hostname = hostname + info[i];
-      
-      if(i < 3){
-        
-        hostname = hostname + ".";
-        
-      }
-      
-    }
+    FTPTempFileOutputStream outs = new FTPTempFileOutputStream();
     
-      
-    port1 = Integer.parseInt(info[4].trim());
-    port2 = Integer.parseInt(info[5].trim());
-    
-    port = (port1 * 256) + port2;
-    
-    return new InetSocketAddress(hostname, port);
+    System.out.println(outs);
     
   }
   
 }
-  
-  

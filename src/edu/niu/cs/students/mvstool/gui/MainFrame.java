@@ -1,75 +1,57 @@
 package edu.niu.cs.students.mvstool.gui;
 
-import javax.swing.BoxLayout;
-import javax.swing.Box.Filler;
+import java.awt.BorderLayout;
 
-import java.awt.Color;
-import java.awt.Dimension;
 
-import javax.swing.JMenu;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-//import javax.swing.ImageIcon;
-import javax.swing.SwingUtilities;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+
+import javax.swing.JMenu;
+import javax.swing.JFrame;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.SwingUtilities;
+
+
 import edu.niu.cs.students.mvstool.gui.AboutBox;
-import edu.niu.cs.students.mvstool.gui.MVSJobList;
 import edu.niu.cs.students.mvstool.gui.ConnectionPanel;
+import edu.niu.cs.students.mvstool.gui.GUIJobListPanel;
 
 
 public class MainFrame extends JFrame {
   
   MainFrame mainFrameHook;
   ConnectionPanel connect;
-  MVSJobList jobList;
+  GUIJobListPanel jobList;
   
   public MainFrame(){
     
     super.setTitle("MVS Tool");
-    super.setSize(700,500);
+    super.setSize(700,400);
     super.setLocationRelativeTo(null);
     super.setJMenuBar(this.buildMenuBar());
     
-    BoxLayout layout = new BoxLayout(super.getContentPane(), BoxLayout.Y_AXIS);
+    getContentPane().setLayout(new BorderLayout());
     
-    super.setLayout(layout);
-    
-    jobList = new MVSJobList();
+    jobList = new GUIJobListPanel();
     connect = new ConnectionPanel(jobList);
     
-    super.add(connect);
-    super.add(jobList);
+    getContentPane().add(connect, BorderLayout.NORTH);
+    getContentPane().add(jobList, BorderLayout.CENTER);
     
-    JPanel red = new JPanel();
-    
-    Dimension dimm = new Dimension(100,100);
-    
-    red.add(new Filler(dimm, dimm, dimm));
-    red.setBackground(Color.RED);
-    add(red);
-    
+        
     this.mainFrameHook = this;
     
   }
   
-//  private ImageIcon getIcon(String iconName){
-//    
-//    /* FIXME: This code throws java.lang.NullPointerException */    
-//    return new ImageIcon(this.getClass().getResource(iconName));
-//    
-//  }
   
   private JMenu buildFileMenu(){
     
-    JMenu filemenu = new JMenu("Connection");
+    JMenu filemenu = new JMenu("File");
     
     JMenuItem exit;
-    JMenuItem connectTo;
-    
+        
     exit = new JMenuItem("Exit"); //this.getIcon("exit.png"));
     exit.setToolTipText("Exit");
     
@@ -78,18 +60,10 @@ public class MainFrame extends JFrame {
       public void actionPerformed(ActionEvent event){
         System.exit(0);
       }
+      
     });
     
-    
-    
-    connectTo = new JMenuItem("Connect To");
-    connectTo.setToolTipText("Open a new connection to a mainframe!");
-    
-    filemenu.add(connectTo);
-    filemenu.addSeparator();
     filemenu.add(exit);
-    
-    
     return filemenu;
     
   }

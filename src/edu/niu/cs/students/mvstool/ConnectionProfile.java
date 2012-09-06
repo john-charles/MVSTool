@@ -287,10 +287,13 @@ public class ConnectionProfile {
       System.out.println("Connection is stale, creating new ftp connection!");
       
       ftpClient = new MVSFTPClient(getHostname(), getHostport());
-      //ftpClient.login(getUsername(), getPassword());
+      ftpClient.login(getUsername(), getPassword());
+      
     } 
     
     ftpLastUsed = getTime();
+    
+    System.out.println("Returning ftpClient");
     
     return ftpClient;
     
