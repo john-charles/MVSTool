@@ -11,7 +11,6 @@ import javax.swing.JMenu;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.UIManager;
 import javax.swing.SwingUtilities;
 
 
@@ -19,7 +18,9 @@ import edu.niu.cs.students.mvstool.gui.AboutBox;
 import edu.niu.cs.students.mvstool.gui.ConnectionPanel;
 import edu.niu.cs.students.mvstool.gui.GUIJobListPanel;
 
-
+/* I created this class a week ago, I don't rember how it works, but
+ * I do know I have not really needed to mess with it, but I code in
+ * a verbose manor, shouldn't be too hard to figure out */
 public class MainFrame extends JFrame {
   
   MainFrame mainFrameHook;
@@ -114,8 +115,7 @@ public class MainFrame extends JFrame {
   }
     
     
-  
-  
+  /* This is the main invocation for the entire application */  
   public static void main(String[] args){
     
     SwingUtilities.invokeLater(new Runnable() {

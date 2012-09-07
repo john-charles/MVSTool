@@ -37,6 +37,9 @@ public abstract class MVSJobListParser implements FTPListParser {
     "Name", "ID", "Owner", "Status", "Class", "Details"
   };
   
+  /* This was originall supposed to just be an enum type thing, but
+   * it sort of blew up in function, it is in fact one of the core
+   * data structures of the whole application! */
   public final class Job {
     
     /* I can't figure out how to use a java enum as an array index */
@@ -45,8 +48,6 @@ public abstract class MVSJobListParser implements FTPListParser {
     static final int ID     = 1;
     static final int Owner  = 2;
     static final int Status = 3;
-//    static final int Class  = 4;
-//    static final int RC     = 5;
     static final int Dets   = 4;
     
     
@@ -73,14 +74,7 @@ public abstract class MVSJobListParser implements FTPListParser {
       return details[Status];
     }
     
-//    public String getclass(){
-//      return details[Class];
-//    }
-//    
-//    public String getReturnCode(){
-//      return details[RC];
-//    }
-    
+
     public String toString(){
       
       String format = 
@@ -95,6 +89,9 @@ public abstract class MVSJobListParser implements FTPListParser {
     
   }
   
+  /* This is the job output format regular expression matching
+   * KC03M62  TSU02305 KC03M62  OUTPUT TSU      RC=0000 3 spool files
+   * more details are provided below */
   private static final String _p =
     "([A-Z0-9]+) +([A-Z0-9]+) +([A-Z0-9]+) +([A-Z]+) +([A-Z0-9]+).*$"; // +RC=([0-9]+) +(.*)$";
   

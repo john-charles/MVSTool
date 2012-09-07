@@ -1,9 +1,7 @@
 package edu.niu.cs.students.mvstool.gui;
 
-import java.io.File;
 
 import java.util.List;
-import java.util.Vector;
 
 import java.awt.BorderLayout;
 
@@ -22,7 +20,6 @@ import edu.niu.cs.students.mvstool.ConnectionProfile;
 import edu.niu.cs.students.mvstool.gui.GUITempFileOutputStream;
 
 import edu.niu.cs.students.mvstool.gui.GUIJobLister;
-import edu.niu.cs.students.mvstool.gui.OutputViewerFrame;
 import edu.niu.cs.students.mvstool.gui.ImmutableTableModel;
 
 import edu.niu.cs.students.mvstool.mvsftp.MVSFTPClient;
@@ -84,7 +81,9 @@ class GUIJobListPanel extends JPanel {
   }
     
   
-    
+  /* When an mvs held job listing succeeds this 
+   * is fired into the event queue and is used to 
+   * update the user interface */
   public class Updater implements Runnable {
     
     private List<Job> jobs;
@@ -115,6 +114,7 @@ class GUIJobListPanel extends JPanel {
       MVSFTPClient client = ConnectionProfile.getConnectionProfile().getFTPClient();
       GUIJobLister lister = new GUIJobLister(this);
       
+      /* WARNING: This creates a new thread! */
       client.getJobs(lister);      
            
     } catch(Exception e){

@@ -7,6 +7,11 @@ import javax.swing.table.AbstractTableModel;
 import edu.niu.cs.students.mvstool.mvsftp.MVSJobListParser;
 import edu.niu.cs.students.mvstool.mvsftp.MVSJobListParser.Job;
 
+/* This is horriby named, as I didn't fully understand what
+ * it was going to be used for, or how it would function
+ * when I first created it, contrary to being 
+ * immutable it is quite mutable, and can be changed
+ * by calling the setJobs method */
 class ImmutableTableModel extends AbstractTableModel {
   
   private List<Job> jobs;
@@ -32,6 +37,8 @@ class ImmutableTableModel extends AbstractTableModel {
     return jobs.get(row).toArray()[col];
   }
   
+  /* call this to update the ui when a new listing
+   * is recieved from the server */
   public void setJobs(List<Job> jobs){
     
     this.jobs = jobs;

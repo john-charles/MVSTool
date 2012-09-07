@@ -1,7 +1,6 @@
 package edu.niu.cs.students.mvstool.gui;
 
 import java.awt.GridLayout;
-import java.awt.BorderLayout;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.GridBagConstraints;
@@ -66,10 +65,6 @@ class ConnectionPanel extends JPanel {
     
     add(buildConnectionTrigger(), c);
     
-    
-    //setPreferredSize(size);
-    //setMaximumSize(size);
-    
   }
   
   private JPanel buildFirstInputArea(){
@@ -115,37 +110,13 @@ class ConnectionPanel extends JPanel {
     return area;
     
   }
-    
   
-    
-  private JPanel buildLeftInputArea(){
-    
-    JPanel area = new JPanel(new GridLayout(2, 2));
-   
-    area.add(new JLabel("Hostname"));
-    area.add(hostname);
-    
-    area.add(new JLabel("Username"));
-    area.add(username);
-    
-    return area;
-    
-  }
-  
-  private JPanel buildRightInputArea(){
-    
-    JPanel area = new JPanel(new GridLayout(2, 2));
-    
-    area.add(new JLabel("Port"));
-    area.add(hostport);
-    
-    area.add(new JLabel("Password"));
-    area.add(hostport);
-    
-    return area;
-    
-  }
-  
+  /* When the user clicks the "connect" button this action is
+   * fired, it takes the values currently in the connection
+   * panel and adds them to the connection profile object.
+   * it then calls the code which actually connects to the
+   * server... I don't know about this architecture, but
+   * it works! so I'm keeping it! */
   private JButton buildConnectionTrigger(){
     
     JButton connect = new JButton("Connect");
@@ -159,6 +130,11 @@ class ConnectionPanel extends JPanel {
         profile.setHostname(hostname.getText());
         profile.setHostport(hostport.getText());
         profile.setUsername(username.getText());
+        /* Note that the compiler warns about the
+         * next line, for now I'm choosing to 
+         * ignore it, as the "non-depricated" 
+         * method is stupid and would get the
+         * same result with twice the amount of code */
         profile.setPassword(password.getText());
         
         jobList.doConnect();

@@ -8,6 +8,7 @@ import edu.niu.cs.students.mvstool.gui.GUIJobListPanel.Updater;
 
 import edu.niu.cs.students.mvstool.mvsftp.MVSJobListParser;
 
+/* A swing enabled job list parser */
 class GUIJobLister extends MVSJobListParser {
   
   private GUIJobListPanel panel;
@@ -24,6 +25,10 @@ class GUIJobLister extends MVSJobListParser {
     
   }
   
+  /* If the download succeeds this fires an updater into
+   * the swing event queue such that swing can happily
+   * update the ui with all the new jobs that have been
+   * downloaded */
   public void succeeded(){
     
     System.out.println("MVSFTPClient.getJobs() succeeded!");

@@ -23,11 +23,21 @@ import java.awt.event.ActionListener;
 import edu.niu.cs.students.mvstool.Utils;
 import edu.niu.cs.students.mvstool.mvsftp.MVSJobListParser.Job;
 
+/* This is self explanatory, this window is opened when job output
+ * has successfully been downloaded, it is simple it shows the job
+ * id in one corner and let's the user save the output by clicking
+ * a button in the other corner */
 public class OutputViewerFrame extends JFrame {
   
   private Job  job;
   private File tempFile;
   
+  /* Creates the new frame but doesn't show it until it's invoked
+   * by the swing event queue, I'm not sure if this is technically
+   * correct as I am uncertain if swing just requires any ui updates
+   * to ocurr in the AWT thread, or all object manipulation, but 
+   * at the moment this works and does not cause any awful errors
+   * so I'm keeping it. */
   public static void createOutputViewer(File tempFile, Job job){
     
     final OutputViewerFrame frame = new OutputViewerFrame(tempFile, job);
@@ -44,6 +54,8 @@ public class OutputViewerFrame extends JFrame {
     
   }
   
+  /* This  creates the new frame, but does not initialize the GUI
+   * in any way, see activeateFrame for gui initialization */
   private OutputViewerFrame(File tempFile, Job job){
     super("JCL Output Viewer");
     this.job = job;
@@ -52,6 +64,7 @@ public class OutputViewerFrame extends JFrame {
     
   }
   
+  /* This updates, and shows the ui in the main AWT thread */
   private void activateFrame(){
     setSize(700, 400);
     
@@ -66,6 +79,9 @@ public class OutputViewerFrame extends JFrame {
     
   }
   
+  /* This ensures that the temp file get's deleted when 
+   * the user closes the window, don't want to be using
+   * all the temp space now do we? */
   private void addClosingAction(){
     
     addWindowListener(new WindowAdapter(){
@@ -80,7 +96,8 @@ public class OutputViewerFrame extends JFrame {
     
   }
     
-  
+  /* Pretty self explanatory, it builds the toolbar with the 
+   * job name, and save button. */
   private JPanel buildToolBar(){
     
     JPanel toolbar = new JPanel(new BorderLayout());
@@ -112,6 +129,13 @@ public class OutputViewerFrame extends JFrame {
     
   }
   
+  /* When the user clicks save file this code is executed and 
+   * saves the file.
+   * 
+   *        Note that I did not implement this in a background
+   * thread, maybe I should have but for now, I'm not noticing
+   * any lag or freezes, the output file would need to be very 
+   * big for that to happen. */
   public void saveToFile(){
     
     /* TODO: make this remember the last directory, or even

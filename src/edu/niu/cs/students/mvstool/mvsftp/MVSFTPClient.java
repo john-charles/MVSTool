@@ -17,6 +17,8 @@ import edu.niu.cs.students.mvstool.mvsftp.MVSJobListParser;
 import edu.niu.cs.students.mvstool.mvsftp.MVSJobListParser.Job;
 import edu.niu.cs.students.mvstool.mvsftp.MVSDefaultJobListParser;
 
+/* This extends the standard ftp client to enable the use of various
+ * mvs ftp server specific site commands */
 public class MVSFTPClient extends FTPClient {
   
   public MVSFTPClient(String hostname, int port) throws IOException {
@@ -32,6 +34,8 @@ public class MVSFTPClient extends FTPClient {
     
     String resp = exec(String.format("SITE FILEtype=%s", mode));
     /* Weird case convention copied from IBM documentation */
+    /* I don't think it actually matters at all, seeing as the
+     * mainframe is case insensative, but I'll follow the docs */
     
     if(!resp.startsWith("2")){
       throw new FTPException(resp.trim());
@@ -41,25 +45,40 @@ public class MVSFTPClient extends FTPClient {
     
   }
   
+  /* Changes the ftp server list mode to show the held jobs output
+   * queue */
   private void setModeJES() throws IOException, FTPException {    
     setMode("jes");    
   }
   
+  /* I implemented this for the future, for the moment it is not
+   * used, the compiler loves to remind me of this fact ad-infinitum
+   * I suppose I should find a way of suppressing those warnings! */
   private void setModeSEQ() throws IOException, FTPException {
     setMode("seq");
   } 
   
+
+  /* Pretty basic, get's the jobs from the server...
+   * 
+   *     NOTE: This fires off a thread, please make sure your parser 
+   * is thread safe! */
   public void getJobs(MVSJobListParser parser) throws IOException, FTPException {
     setModeJES();    
     list("", parser);    
   }
   
+  /* same as above */
   public void getJobs() throws IOException, FTPException {
     
     getJobs(new MVSDefaultJobListParser());
     
   }
   
+  /* Determines if a job can be downloaded, if the user tried
+   * to download an active job, the server will block, and thanks
+   * to concurrency needs the application will in general lock up
+   * completely! */
   private void goodJob(Job job) throws FTPException {
     
     if(job.getStatus().equals("ACTIVE")){
@@ -68,6 +87,9 @@ public class MVSFTPClient extends FTPClient {
     
   }
   
+  /* The FTPClient implementation has a default FTPOutputStream 
+   * that is uses, so we have to re-implement the whole function twice!
+   * what a bother */
   public void getJobOutput(Job job) throws IOException, FTPException {
     
     goodJob(job);    
@@ -76,6 +98,8 @@ public class MVSFTPClient extends FTPClient {
     
   }
   
+  /* Any call to get will fire off a new thread, this is to make swing coding 
+   * easier, and to improve the overall design of the application! */
   public void getJobOutput(Job job, FTPOutputStream out) throws IOException, FTPException {
     
     goodJob(job);
@@ -84,14 +108,7 @@ public class MVSFTPClient extends FTPClient {
   }
   
   
-  public static void main(String[] args) throws Exception {
-    
-    MVSFTPClient client = new MVSFTPClient("zos.kctr.marist.edu", 21);
-    
-    client.login("kc03m62", "jkmg8840");
-    client.getJobs();
-    
-  }
+  
     
   
 }
