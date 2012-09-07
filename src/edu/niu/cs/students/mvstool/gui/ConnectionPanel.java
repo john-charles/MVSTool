@@ -2,7 +2,9 @@ package edu.niu.cs.students.mvstool.gui;
 
 import java.awt.GridLayout;
 import java.awt.BorderLayout;
+import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
+import java.awt.GridBagConstraints;
 import java.awt.event.ActionListener;
 
 
@@ -38,11 +40,31 @@ class ConnectionPanel extends JPanel {
     password = new JPasswordField(profile.getPassword());
     
     //setBorder(new EmptyBorder(new Insets(10, 10, 10, 10)));
-    setLayout(new BorderLayout());
+    setLayout(new GridBagLayout());
     
-    add(buildLeftInputArea(), BorderLayout.WEST);
-    add(buildRightInputArea(), BorderLayout.CENTER);
-    add(buildConnectionTrigger(), BorderLayout.EAST);
+    GridBagConstraints c = new GridBagConstraints();
+    
+    c.fill = GridBagConstraints.BOTH;
+    c.weightx = 1.0;    
+    
+    add(buildFirstInputArea(), c);
+    
+    c.weightx = 2.0;
+    
+    add(buildSecondInputArea(), c);
+    
+    c.weightx = 1.0;
+    
+    add(buildThirdInputArea(), c);
+    
+    c.weightx = 2.0;
+    
+    add(buildFourthInputArea(), c);
+    
+    c.weightx = 1.0;
+    c.gridwidth = GridBagConstraints.REMAINDER;
+    
+    add(buildConnectionTrigger(), c);
     
     
     //setPreferredSize(size);
@@ -50,9 +72,55 @@ class ConnectionPanel extends JPanel {
     
   }
   
+  private JPanel buildFirstInputArea(){
+    
+    JPanel panel = new JPanel(new GridLayout(2, 1));
+    
+    panel.add(new JLabel("Hostname"));
+    panel.add(new JLabel("Username"));
+    
+    return panel;
+    
+  }
+  
+  private JPanel buildSecondInputArea(){
+    
+    JPanel area = new JPanel(new GridLayout(2, 1));
+    
+    area.add(hostname);
+    area.add(username);
+    
+    return area;
+    
+  }
+  
+  private JPanel buildThirdInputArea(){
+    
+    JPanel area = new JPanel(new GridLayout(2, 1));
+    
+    area.add(new JLabel("Port"));
+    area.add(new JLabel("Password"));
+    
+    return area;
+    
+  }
+  
+  private JPanel buildFourthInputArea(){
+    
+    JPanel area = new JPanel(new GridLayout(2, 1));
+    
+    area.add(hostport);
+    area.add(password);
+    
+    return area;
+    
+  }
+    
+  
+    
   private JPanel buildLeftInputArea(){
     
-    JPanel area = new JPanel(new GridLayout(2, 4));
+    JPanel area = new JPanel(new GridLayout(2, 2));
    
     area.add(new JLabel("Hostname"));
     area.add(hostname);
@@ -66,13 +134,13 @@ class ConnectionPanel extends JPanel {
   
   private JPanel buildRightInputArea(){
     
-    JPanel area = new JPanel(new GridLayout(2, 4));
+    JPanel area = new JPanel(new GridLayout(2, 2));
     
     area.add(new JLabel("Port"));
     area.add(hostport);
     
     area.add(new JLabel("Password"));
-    area.add(password);
+    area.add(hostport);
     
     return area;
     
