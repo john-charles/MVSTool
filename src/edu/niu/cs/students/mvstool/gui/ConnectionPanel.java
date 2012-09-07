@@ -45,7 +45,7 @@ class ConnectionPanel extends JPanel {
     GridBagConstraints c = new GridBagConstraints();
     
     c.fill = GridBagConstraints.BOTH;
-    c.weightx = 1.0;    
+    c.weightx = 0.5;    
     
     add(buildFirstInputArea(), c);
     
@@ -53,7 +53,7 @@ class ConnectionPanel extends JPanel {
     
     add(buildSecondInputArea(), c);
     
-    c.weightx = 1.0;
+    c.weightx = 0.5;
     
     add(buildThirdInputArea(), c);
     
