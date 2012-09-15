@@ -5,6 +5,11 @@ import java.io.IOException;
 
 class ByteInput {
   
+  /* This is needed later to get around the fact that InputStream.read() returns
+   * and int instead of a char, or byte, this is easier than using a typecast!*/
+  protected static final byte CR = 13;
+  protected static final byte LF = 10;
+  
   InputStream input;
   
   public ByteInput(InputStream _input){
@@ -18,17 +23,22 @@ class ByteInput {
     *         an IOException.                                                    *
     ******************************************************************************/
   protected byte getByte() throws IOException {
-    /* Note this should be re-implemented to use the int InputStream.read() 
-     * method, I wrote this before I looked at the InputStream documentation! */
-    byte[] bytes = new byte[1];
-    System.out.println("in ByteInput.getByte()...");
-    int read = input.read(bytes, 0, 1);
+    /* WHYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY?
+     * Why would read possibly return an integer....
+     * according to the documentation when the end of
+     * a file/end of a socket stream is reached -1 is returned
+     * but guess what, read returnes an int, what happens when
+     * you add 00000000 00000000 00000000 to the front of 11111111?
+     * you get positive 256, not -1.... WTF?
+     * I can't believe this is really part of the java standard 
+     * library... */
+    int read = input.read();
     
-    if(read == 0){
-      bytes[0] = -1;
+    if(read < 0 || read > 255){
+      return -1;
     }
     
-    return bytes[0];
+    return (byte)read;
     
   }
   

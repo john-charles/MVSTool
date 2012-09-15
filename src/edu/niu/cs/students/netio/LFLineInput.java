@@ -13,23 +13,19 @@ public class LFLineInput extends ByteInput
     super(in);
   }
   
-  public String recv() throws IOException {
-    
-    System.out.println("IN LFLineInput.recv()");
-    
+  public String recv() throws IOException { 
+       
     String response = "";
     byte curByte = getByte();
-    
-    if(curByte == -1){
+    if(curByte <= 0){
       return null;
       
     }
     
-    while(curByte > -1){
-      System.out.println("while.response = " + response);
+    while(curByte > 0){
       response = response + (char)curByte;
       
-      if(curByte == (char)'\n'){
+      if(curByte == LF){
         break;
         
       } else {
@@ -39,8 +35,6 @@ public class LFLineInput extends ByteInput
       }
       
     }
-    
-    
     
     return response;
     

@@ -9,11 +9,6 @@ import edu.niu.cs.students.netio.ByteInput;
 public class CRLFLineInput extends ByteInput
   implements LineInput {
   
-  /* This is needed later to get around the fact that InputStream.read() returns
-   * and int instead of a char, or byte, this is easier than using a typecast!*/
-  private static final byte CR = 13;
-  private static final byte LF = 10;
-      
   public CRLFLineInput(InputStream in){
     super(in);    
   }
@@ -29,10 +24,16 @@ public class CRLFLineInput extends ByteInput
     ******************************************************************************/  
   public String recv() throws IOException {
     
+    
+    
     boolean crFound = false;
     String response = new String();
     
     byte curByte = getByte();
+    
+    if(curByte <= 0){
+      return null;
+    }
     
     while(curByte > -1){
       

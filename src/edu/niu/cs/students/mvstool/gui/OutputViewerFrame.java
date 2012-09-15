@@ -37,6 +37,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JFileChooser;
 import javax.swing.SwingUtilities;
 
+import java.awt.Font;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowEvent;
@@ -148,7 +149,8 @@ public class OutputViewerFrame extends JFrame {
   private JScrollPane buildTextArea(){
     
     String text = Utils.loadFileToString(tempFile);    
-    JTextArea textArea = new JTextArea(text);    
+    JTextArea textArea = new JTextArea(text);   
+    textArea.setFont(new Font("Monospaced", Font.PLAIN, 12));
     return new JScrollPane(textArea);
     
   }

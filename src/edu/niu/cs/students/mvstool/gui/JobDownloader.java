@@ -8,6 +8,7 @@ import java.io.IOException;
 
 import edu.niu.cs.students.mvstool.ftp.FTPClient;
 import edu.niu.cs.students.mvstool.gui.OutputViewerFrame;
+import edu.niu.cs.students.mvstool.mvsftp.MVSFTPClient;
 import edu.niu.cs.students.mvstool.mvsftp.MVSJobDownloader;
 import edu.niu.cs.students.mvstool.mvsftp.MVSJobListParser.Job;
 
@@ -16,7 +17,7 @@ class JobDownloader extends MVSJobDownloader {
   Job job;
   JPanel frame;
   
-  public JobDownloader(Job _ob, FTPClient _lient, JPanel _rame) throws IOException {
+  public JobDownloader(Job _ob, MVSFTPClient _lient, JPanel _rame) throws IOException {
     super(_ob, _lient);
     job = _ob;
     frame = _rame;

@@ -24,6 +24,7 @@ package edu.niu.cs.students.mvstool.mvsftp;
   *                                                                              *
   * ******************************************************************************/
 import java.io.IOException;
+import java.io.InputStream;
 
 /* Resources for understanding this code!
  * 
@@ -110,17 +111,7 @@ public class MVSFTPClient extends FTPClient {
     
   }
   
-  /* The FTPClient implementation has a default FTPOutputStream 
-   * that is uses, so we have to re-implement the whole function twice!
-   * what a bother */
-  public void getJobOutput(Job job) throws IOException, FTPException {
     
-    goodJob(job);    
-    setModeJES();    
-    get(job.getID(), 'A');
-    
-  }
-  
   /* Any call to get will fire off a new thread, this is to make swing coding 
    * easier, and to improve the overall design of the application! */
   public void getJobOutput(Job job, FTPOutputStream out) throws IOException, FTPException {
@@ -130,7 +121,14 @@ public class MVSFTPClient extends FTPClient {
     get(job.getID(), 'A', out);
   }
   
-  
+  public InputStream getJob(Job job)
+    throws IOException, FTPException {
+    
+    goodJob(job);
+    setModeJES();
+    return getFile(job.getID(), 'A');
+    
+  }
   
     
   

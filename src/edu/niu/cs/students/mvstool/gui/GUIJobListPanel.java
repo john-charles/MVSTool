@@ -92,7 +92,7 @@ class GUIJobListPanel extends JPanel {
     try {
       
       MVSFTPClient client = ConnectionProfile.getConnectionProfile().getFTPClient();
-      new Thread(new JobDownloader(job, (FTPClient)client, this)).start();
+      new Thread(new JobDownloader(job, client, this)).start();
            
     } catch(Exception e){
       
