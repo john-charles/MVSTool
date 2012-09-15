@@ -101,7 +101,7 @@ public class MVSFTPClient extends FTPClient {
   
   /* Determines if a job can be downloaded, if the user tried
    * to download an active job, the server will block, and thanks
-   * to concurrency needs the application will in general lock up
+   * to concurrency means the application will in general lock up
    * completely! */
   private void goodJob(Job job) throws FTPException {
     
@@ -112,15 +112,6 @@ public class MVSFTPClient extends FTPClient {
   }
   
     
-  /* Any call to get will fire off a new thread, this is to make swing coding 
-   * easier, and to improve the overall design of the application! */
-  public void getJobOutput(Job job, FTPOutputStream out) throws IOException, FTPException {
-    
-    goodJob(job);
-    setModeJES();
-    get(job.getID(), 'A', out);
-  }
-  
   public InputStream getJob(Job job)
     throws IOException, FTPException {
     
