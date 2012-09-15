@@ -44,7 +44,10 @@ import edu.niu.cs.students.mvstool.gui.GUITempFileOutputStream;
 import edu.niu.cs.students.mvstool.gui.GUIJobLister;
 import edu.niu.cs.students.mvstool.gui.ImmutableTableModel;
 
+import edu.niu.cs.students.mvstool.ftp.FTPClient;
+
 import edu.niu.cs.students.mvstool.mvsftp.MVSFTPClient;
+import edu.niu.cs.students.mvstool.mvsftp.MVSJobDownloader;
 import edu.niu.cs.students.mvstool.mvsftp.MVSJobListParser.Job;
 
 class GUIJobListPanel extends JPanel {
@@ -89,9 +92,7 @@ class GUIJobListPanel extends JPanel {
     try {
       
       MVSFTPClient client = ConnectionProfile.getConnectionProfile().getFTPClient();
-      GUITempFileOutputStream output = new GUITempFileOutputStream(job);
-      
-      client.getJobOutput(job, output);
+      new Thread(new JobDownloader(job, (FTPClient)client, this)).start();
            
     } catch(Exception e){
       
