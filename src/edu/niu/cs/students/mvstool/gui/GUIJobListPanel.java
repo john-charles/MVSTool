@@ -39,8 +39,6 @@ import javax.swing.JScrollPane;
 
 import edu.niu.cs.students.mvstool.ConnectionProfile;
 
-import edu.niu.cs.students.mvstool.gui.GUITempFileOutputStream;
-
 import edu.niu.cs.students.mvstool.gui.GUIJobLister;
 import edu.niu.cs.students.mvstool.gui.ImmutableTableModel;
 
