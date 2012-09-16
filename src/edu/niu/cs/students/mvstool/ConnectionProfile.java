@@ -280,7 +280,10 @@ public class ConnectionProfile {
       out.close();
       
     } catch(IOException ie){
-      
+      /* NOTE: if this information isn't saved, the user will
+       * need to re-enter it next time, although this is 
+       * inconvenient, this is not really an error, and so I
+       * will not treat it as such! */
     }
     
   }   
@@ -302,8 +305,6 @@ public class ConnectionProfile {
   
   
   public MVSFTPClient getFTPClient() throws IOException, FTPException {
-    
-    System.out.println(String.format("Using username: %s, password: %s", getUsername(), getPassword()));
     
     if(!isConnected()){
       

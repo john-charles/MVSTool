@@ -35,7 +35,7 @@ import java.io.InputStream;
 
 import edu.niu.cs.students.mvstool.ftp.FTPClient;
 import edu.niu.cs.students.mvstool.ftp.FTPException;
-import edu.niu.cs.students.mvstool.ftp.FTPOutputStream;
+
 
 import edu.niu.cs.students.mvstool.mvsftp.MVSJobListParser;
 import edu.niu.cs.students.mvstool.mvsftp.MVSJobListParser.Job;

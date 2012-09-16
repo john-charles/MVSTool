@@ -38,16 +38,25 @@ class AboutBox extends JFrame {
     
     String aboutDetails = "<html>" + 
       "MVS Tool 1.0 (c) 2012<br><br><br>" +
-      "THE SOFTWARE IS PROVIDED \"AS IS\", <br>" +
-      "WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,<br>" + 
-      "INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF <br>" +
-      "MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE <br>" +
-      "AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS <br>" +
-      "OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES <br>" +
-      "OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, <br>" +
-      "TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION <br>" + 
-      "WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE <br>" +
-      "SOFTWARE.</html>";     
+      "License information:<br><br>" +
+      "Copyright (c) 2012 John-Charles D. Sokolow<br>" +
+      "<br>" +
+      "    Permission is hereby granted, free of charge, to any person obtaining a<br>" +
+      " copy of this software and associated documentation files (the \"Software\"),<br>" +
+      " to deal in the Software without restriction, including without<br>" +
+      " limitation the rights to use, copy, modify, merge, publish, distribute,<br>" +
+      " sublicense, and/or sell copies of the Software, and to permit persons to<br>" +
+      " whom the Software is furnished to do so, subject to the following<br>" +
+      " conditions:<br><br>" +
+      "    The above copyright notice and this permission notice shall be included<br>" +
+      "       in all copies or substantial portions of the Software.<br><br>" +
+      "    THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS<br>" +
+      "    OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF<br>" +
+      "    MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.<br>" +
+      "    IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY<br>" +
+      "    CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,<br>" +
+      "    TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE<br>" + 
+      "    SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.<br>" + "</html>";     
     
     JPanel panel = new JPanel(); 
     
