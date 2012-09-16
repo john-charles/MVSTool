@@ -38,6 +38,7 @@ import javax.swing.SwingUtilities;
 
 
 import edu.niu.cs.students.mvstool.gui.AboutBox;
+import edu.niu.cs.students.mvstool.gui.SetLookAndFeel;
 import edu.niu.cs.students.mvstool.gui.ConnectionPanel;
 import edu.niu.cs.students.mvstool.gui.GUIJobListPanel;
 
@@ -140,6 +141,8 @@ public class MainFrame extends JFrame {
     
   /* This is the main invocation for the entire application */  
   public static void main(String[] args){
+    
+    SetLookAndFeel.set();
     
     SwingUtilities.invokeLater(new Runnable() {
       public void run(){

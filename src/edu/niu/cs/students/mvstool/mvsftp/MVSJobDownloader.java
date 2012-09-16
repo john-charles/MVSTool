@@ -75,8 +75,8 @@ public abstract class MVSJobDownloader extends FTPRunnable {
   }
   
   private String newPage(){
-    
-    return CRLF + "------------------------ Page " + (page++) + " -----------------------" + CRLF;
+    return "";
+    //return CRLF + "------------------------ Page " + (page++) + " -----------------------" + CRLF;
     
   }
   
