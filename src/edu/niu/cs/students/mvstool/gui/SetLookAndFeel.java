@@ -9,6 +9,8 @@ package edu.niu.cs.students.mvstool.gui;
 import javax.swing.*;
 import java.awt.*;
 
+import edu.niu.cs.students.mvstool.ConnectionProfile;
+
 class SetLookAndFeel {
   
   private static void setLNF(String name){
@@ -17,38 +19,29 @@ class SetLookAndFeel {
       
       UIManager.setLookAndFeel(name);
     } 
-    catch (UnsupportedLookAndFeelException e) {
-      e.printStackTrace();
-    }
-    catch (ClassNotFoundException e) {
-      // handle exception
-    }
-    catch (InstantiationException e) {
-      // handle exception
-    }
-    catch (IllegalAccessException e) {
-      // handle exception
-    }
-    
+    catch (Exception e) {
+      /* Swing has a sane default... so if we can't use
+       * this lnf then we really don't care... the user
+       * might be disapointed, but this is not a substantial
+       * error... so ignore it here!*/
+    }       
   }
-  
-  private static void tryGTK(){
-    
-    String gtkLNF = "com.sun.java.swing.plaf.gtk.GTKLookAndFeel";
-    setLNF(gtkLNF);
-    
-  } 
   
   public static void set(){
     
     UIManager.LookAndFeelInfo plaf[] = UIManager.getInstalledLookAndFeels();
-//    for (int i = 0, n = plaf.length; i < n; i++) {
-//      System.out.println("Name: " + plaf[i].getName());
-//      System.out.println("  Class name: " + plaf[i].getClassName());
-//    }
+
     
-    tryGTK(); 
-    setLNF("joxy.JoxyLookAndFeel");
+    ConnectionProfile profile = ConnectionProfile.getConnectionProfile();
+    
+    /* The gtk look and feel looks aweful on kde based systems...
+     * this lets the user specify in their configuration file
+     * that they don't want the gtk look and feel...*/    
+    if(profile.useGTKLookAndFeel()){
+      setLNF("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
+    }
+    
+    setLNF("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
     
   }
   

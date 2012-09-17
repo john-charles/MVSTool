@@ -391,8 +391,31 @@ public class ConnectionProfile {
     this.password = password;
     
   }
+  
+  private static final String dontUseGTKLNF = "UseGTKLookAndFeel";
+  /* This is all about allowing the user to disable the GTK Look
+   * and Feel if it doesn't fit with their desktop...
+   * 
+   * TODO: Add a ui element so that this is click configurable...*/
+  public boolean useGTKLookAndFeel(){
     
+    String useGTKLookAndFeel = profile.getProperty(dontUseGTKLNF);
     
+    if(useGTKLookAndFeel != null){
+      return useGTKLookAndFeel.toLowerCase().equals("true");
+    }
+    
+    return true;
+    
+  }
+    
+  public void setDontUseGTKLookAndFeel(boolean val){
+    
+    profile.setProperty(dontUseGTKLNF, Boolean.toString(!val));
+    saveProfile();
+    
+  }
+  
   
   public static void main(String[] args){
     
