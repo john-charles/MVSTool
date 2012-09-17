@@ -33,7 +33,10 @@ import edu.niu.cs.students.mvstool.ftp.FTPException;
 import edu.niu.cs.students.mvstool.mvsftp.MVSFTPClient;
 
 public class ConnectionProfile {
-  
+  /* Scary, a registry key... this is not used, but I was attempting to make the
+   * application "H:" drive aware, in that it would store it's temporary files there
+   * instead of %APPDATA%/mvstool this was a disaster, but I may work on it in the
+   * future, so I left the string with the registry key in... */
   private static final String UserShellFolders = 
     "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\User Shell Folders";
   
@@ -48,6 +51,7 @@ public class ConnectionProfile {
   
   static ConnectionProfile gProfile;
   
+  /* Returns the singleton connection profile instance... */
   static public ConnectionProfile getConnectionProfile(){
     
     if(gProfile == null){
@@ -70,6 +74,9 @@ public class ConnectionProfile {
     this("Default");    
   }
   
+  /* I originally wanted to have a method whereby different connection
+   * profiles could be specified by the user, I may still do that... 
+   * for now profileName is ignored... */
   private ConnectionProfile(String profileName){
     
     ftpLastUsed = 0;
@@ -99,118 +106,29 @@ public class ConnectionProfile {
     
   }
   
-  private int skipBlank(String line, int idx){
-    
-    while(line.charAt(idx) == ' ') idx++;
-    
-    return idx;
-    
-  }    
   
-  private String parseLine(String line){
-    
-    int idx = 0;
-    String[] parsed = new String[3];
-    
-    while(line.contains("  ")){
-      line = line.replace("  "," ");
-    }
-    
-    if(line.equals("")) return null;
-    
-    parsed[0] = new String();
-    
-    while(line.charAt(idx) != ' '){
-      parsed[0] = parsed[0] + line.charAt(idx++);
-    }
-    
-    idx = skipBlank(line, idx);    
-    parsed[1] = new String();
-    
-    while(line.charAt(idx) != ' '){
-      parsed[1] = parsed[1] + line.charAt(idx++);
-    }
-    
-    parsed[2] = new String();
-    
-    while(true){
-      try {
-        parsed[2] = parsed[2] + line.charAt(idx++);
-      } catch(StringIndexOutOfBoundsException e){
-        break;
-      }
-    }
-    
-    if(parsed[0].equals("Personal")){
-      return parsed[2];
-    } else {
-      return null;
-    }
-  }
-    
   
-  private String findPersonal(){
-    
-    String[] args = new String[]
-      {"REG", "QUERY", UserShellFolders };
-    
-    try {
-      
-      Runtime run = Runtime.getRuntime();
-      Process reg = run.exec(args);
-      
-      InputStream in = reg.getInputStream();
-      //InputStream er = reg.getErrorStream();
-      
-      String input = new String();
-      byte[] bytes = new byte[1];
-                  
-      while(in.read(bytes, 0, bytes.length) > 0){
-        input = input + new String(bytes);                
-      }
-      
-      for(String line: input.split("\n")){
-        String path = parseLine(line.trim());
-        if(path != null){
-          return path.trim();
-        }
-      }
-      
-    } catch(Exception e){
-      
-      e.printStackTrace();
-      
-      
-    }
-    return null;
-  }
   
-  private String resolveWindowsEnv(String string){
-    
-    String userprofile = System.getenv("USERPROFILE");
-    
-    string = string.replace("%USERPROFILE%", userprofile);
-    
-    return string;
-  }
   
-  private boolean winProfileRoaming(){
-    return false;
-  }
 
   private File findConfigFileWindows(){
     
-    if(winProfileRoaming()){
+    if(false){
+      /* This is part of the code that was attempting to figure out the H: drive
+       * situation, and used the registry key above.... for now, it's commented 
+       * out. The referenced methods are deleted... but can be found in the git
+       * tree history... */
+//      String personal = findPersonal();
+//      
+//      File appdata = new File(resolveWindowsEnv(personal));
+//      
+//      return new File(appdata, "MVSTool");
       
-      String personal = findPersonal();
-      
-      File appdata = new File(resolveWindowsEnv(personal));
-      
-      return new File(appdata, "MVSTool");
-      
-      
+       return null; 
     } else {
       
+      /* If this returns null, there are bigger problems with your
+       * computer than I can possibly solve for here... */
       File appdata = new File(System.getenv("APPDATA"));
       
       return new File(appdata, "mvstool");
@@ -220,18 +138,23 @@ public class ConnectionProfile {
   }
     
   
+  /* Gets the directory to use for configuration data, note
+   * that this is the XDG_* dir on linux/open desktops and the
+   * 
+   * on windows it gets the "%APPDATA%" env variable...
+   * http://blogs.msdn.com/b/patricka/archive/2010/03/18/where-should-i-store-my-data-and-configuration-files-if-i-target-multiple-os-versions.aspx
+   * */
   private File findConfigFile(){
     
     File configFile;
-    
-    System.out.println(System.getProperty("os.name"));
-    
+           
     if(System.getProperty("os.name").equals("Linux")){
       configFile = findConfigFileLinux();
     } else if(System.getProperty("os.name").startsWith("Windows")){
-      //* Place holder for windows!
       configFile = findConfigFileWindows();
     } else {
+      /* Place holder for everything else, anyone want to lend me a mac? */
+      /* I guess I should change this to $HOME/.mvstool ? */
       configFile = new File(".").getAbsoluteFile();
     }
     
