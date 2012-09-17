@@ -16,13 +16,36 @@ class ByteInput {
     input = _input;
   }
   
+  private int lastByte = 1;
+  
+//  protected boolean hasMore(){
+//    
+//    try {
+//      
+//      if(input.available() > 0){
+//        
+//        if(lastByte < 0 || lastByte > 255){
+//          return (boolean)false;
+//        } else {
+//          return (boolean)true;
+//        }
+//      }
+//    } catch(IOException e){
+//      e.printStackTrace();
+//      //return false;
+//    }
+//    
+//  }
+    
+    
+  
   /*******************************************************************************
     * byte getByte(); recieves one byte from the server, may block indefinitely! *
     *                                                                            *
     * Throws: This method may throw java.io.IOException if the the socket throws *
     *         an IOException.                                                    *
     ******************************************************************************/
-  protected byte getByte() throws IOException {
+  protected int getByte() throws IOException {
     /* WHYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY?
      * Why would read possibly return an integer....
      * according to the documentation when the end of
@@ -33,8 +56,11 @@ class ByteInput {
      * I can't believe this is really part of the java standard 
      * library... */
     int read = input.read();
+    //System.out.println("available: " + input.available());
     
     if(read < 0 || read > 255){
+      System.out.println("EOF allegedly reached, read = " + read);
+      System.out.println("input.available() = " + input.available());
       return -1;
     }
     

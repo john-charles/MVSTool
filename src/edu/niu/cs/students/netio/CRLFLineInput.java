@@ -29,13 +29,14 @@ public class CRLFLineInput extends ByteInput
     boolean crFound = false;
     String response = new String();
     
-    byte curByte = getByte();
+    int curByte = getByte();
     
-    if(curByte <= 0){
+    if(curByte == -1){
+      System.out.println("curByte = " + curByte);
       return null;
     }
     
-    while(curByte > -1){
+    while(curByte != -1){
       
       response = response + (char)curByte;
       /* The following is logic to determine if we have successfully
@@ -54,8 +55,10 @@ public class CRLFLineInput extends ByteInput
         crFound = false;
       
       curByte = getByte();
-      
+      /* This works.... well, sort of, sometimes it returns
+       * the null string "", I don't know why that is though! */
     }   
+    
     
     return response;
     

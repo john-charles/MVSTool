@@ -16,13 +16,13 @@ public class LFLineInput extends ByteInput
   public String recv() throws IOException { 
        
     String response = "";
-    byte curByte = getByte();
+    int curByte = getByte();
     if(curByte <= 0){
       return null;
       
     }
     
-    while(curByte > 0){
+    while(curByte > -1){
       response = response + (char)curByte;
       
       if(curByte == LF){

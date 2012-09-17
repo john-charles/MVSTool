@@ -81,7 +81,9 @@ public abstract class MVSJobDownloader extends FTPRunnable {
   }
   
   private String processLine(String line){
-    
+//    if(line.equals("")){
+//      return line;
+//    }
     char ccChar = line.charAt(0);
     line = line.substring(1, line.length()).trim();
     

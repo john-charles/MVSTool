@@ -48,6 +48,7 @@ class SetLookAndFeel {
 //    }
     
     tryGTK(); 
+    setLNF("joxy.JoxyLookAndFeel");
     
   }
   
