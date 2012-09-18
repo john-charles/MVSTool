@@ -1,6 +1,4 @@
-/*
- * 
- * HOW TO COMPILE THIS PROGRAM...
+HOW TO COMPILE THIS PROGRAM...
   
   download a copy of the application dr. java... 
   from http://drjava.sourceforge.net/ run it. 
@@ -32,4 +30,12 @@ HOW TO CREATE A JAR...
   with something like chmod +x mvstool.jar on windows you can skip this step.
   
   
-  your done! */
+  your done!
+
+Address comments/questions/suggestions to z1552897@students.niu.edu
+
+
+NOTE about version numbers:
+
+Odd number versions are testing/development even number versions are
+considered stable release quality builds...
