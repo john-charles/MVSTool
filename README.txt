@@ -34,9 +34,3 @@ HOW TO CREATE A JAR...
   your done!
 
 Address comments/questions/suggestions to z1552897@students.niu.edu
-
-
-NOTE about version numbers:
-
-Odd number versions are testing/development even number versions are
-considered stable release quality builds...
