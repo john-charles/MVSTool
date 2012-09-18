@@ -34,3 +34,12 @@ HOW TO CREATE A JAR...
   your done!
 
 Address comments/questions/suggestions to z1552897@students.niu.edu
+
+Notes about version numbers:
+    I intend to follow a Google Chrome/Firefox 4+ numbering convention
+    with A second label of "testing" or "stable" to denote project
+    project stability, for exampe 1.0 testing is the 1.0 application
+    in a testing form. 
+    1.0 stable is the 1.0 version which has been determined to be stable
+    enough to release to the general user base.
+
