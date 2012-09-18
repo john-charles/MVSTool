@@ -37,8 +37,8 @@ public class ConnectionProfile {
    * application "H:" drive aware, in that it would store it's temporary files there
    * instead of %APPDATA%/mvstool this was a disaster, but I may work on it in the
    * future, so I left the string with the registry key in... */
-  private static final String UserShellFolders = 
-    "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\User Shell Folders";
+  //private static final String UserShellFolders = 
+  //  "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\User Shell Folders";
   
   private static final int ftpTimeOut = 100;
   

@@ -43,9 +43,6 @@ class SetLookAndFeel {
   
   public static void set(){
     
-    UIManager.LookAndFeelInfo plaf[] = UIManager.getInstalledLookAndFeels();
-
-    
     ConnectionProfile profile = ConnectionProfile.getConnectionProfile();
     
     /* The gtk look and feel looks aweful on kde based systems...

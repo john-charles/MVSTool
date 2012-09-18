@@ -74,9 +74,9 @@ public class MVSFTPClient extends FTPClient {
   /* I implemented this for the future, for the moment it is not
    * used, the compiler loves to remind me of this fact ad-infinitum
    * I suppose I should find a way of suppressing those warnings! */
-  private void setModeSEQ() throws IOException, FTPException {
-    setMode("seq");
-  } 
+//  private void setModeSEQ() throws IOException, FTPException {
+//    setMode("seq");
+//  } 
   
 
   /* Pretty basic, get's the jobs from the server...

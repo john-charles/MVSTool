@@ -38,10 +38,10 @@ import edu.niu.cs.students.mvstool.ConnectionProfile;
 import edu.niu.cs.students.mvstool.gui.GUIJobLister;
 import edu.niu.cs.students.mvstool.gui.ImmutableTableModel;
 
-import edu.niu.cs.students.mvstool.ftp.FTPClient;
+//import edu.niu.cs.students.mvstool.ftp.FTPClient;
 
 import edu.niu.cs.students.mvstool.mvsftp.MVSFTPClient;
-import edu.niu.cs.students.mvstool.mvsftp.MVSJobDownloader;
+//import edu.niu.cs.students.mvstool.mvsftp.MVSJobDownloader;
 import edu.niu.cs.students.mvstool.mvsftp.MVSJobListParser.Job;
 
 /****************************************************

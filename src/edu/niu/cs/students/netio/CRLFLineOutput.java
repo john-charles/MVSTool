@@ -21,7 +21,6 @@ package edu.niu.cs.students.netio;
  ***********************************************************************/
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.FileOutputStream;
 
 import edu.niu.cs.students.netio.LineOutput;
 

@@ -20,7 +20,6 @@ package edu.niu.cs.students.mvstool.mvsftp;
  * USA                                                                 *
  ***********************************************************************/
 import java.io.File;
-import java.io.InputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.FileOutputStream;

@@ -25,7 +25,6 @@ import javax.swing.SwingUtilities;
 
 import java.io.IOException;
 
-import edu.niu.cs.students.mvstool.ftp.FTPClient;
 import edu.niu.cs.students.mvstool.gui.OutputViewerFrame;
 import edu.niu.cs.students.mvstool.mvsftp.MVSFTPClient;
 import edu.niu.cs.students.mvstool.mvsftp.MVSJobDownloader;
