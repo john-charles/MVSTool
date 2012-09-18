@@ -1,6 +1,4 @@
-/*
- * 
- * HOW TO COMPILE THIS PROGRAM...
+HOW TO COMPILE THIS PROGRAM...
   
   download a copy of the application dr. java... 
   from http://drjava.sourceforge.net/ run it. 
@@ -20,16 +18,17 @@
   
 HOW TO CREATE A JAR...
   
-  after you have completed the following step, from the project menu 
-  select "Create Jar File From Project"
+  after you have completed the previous step:
+    from the project menu 
+    select "Create Jar File From Project"
   
-  then check mark the radio button "jar classes"  and "make executable"
-  under make executable
-  enter "edu.niu.cs.students.mvstool.gui.MainFrame" select where you would
-  like the output jar to be stored and click  ok. 
+    then check mark the radio button "jar classes"  and "make executable"
+    under make executable
+       enter "edu.niu.cs.students.mvstool.gui.MainFrame" select where you would
+    like the output jar to be stored and click  ok. 
   
-  If your on unix, go to the output jar and set it's executable bit to on
+  If your operating system is unix like, go to the output jar and set its executable bit to on.
   with something like chmod +x mvstool.jar on windows you can skip this step.
   
   
-  your done! */
+  your done!

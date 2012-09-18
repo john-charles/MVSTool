@@ -44,6 +44,9 @@ import edu.niu.cs.students.mvstool.mvsftp.MVSFTPClient;
 import edu.niu.cs.students.mvstool.mvsftp.MVSJobDownloader;
 import edu.niu.cs.students.mvstool.mvsftp.MVSJobListParser.Job;
 
+/****************************************************
+  * This class displays the list of downloaded jobs *
+  * *************************************************/
 class GUIJobListPanel extends JPanel {
   
   private JTable  table;
