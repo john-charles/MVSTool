@@ -31,6 +31,7 @@ import javax.swing.JMenu;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
 
@@ -143,11 +144,17 @@ public class MainFrame extends JFrame {
     
     SwingUtilities.invokeLater(new Runnable() {
       public void run(){
-    
+        
+        
+        
         MainFrame frame;
         
         frame = new MainFrame();
         frame.setVisible(true);
+        
+        JOptionPane.showMessageDialog(frame, "MVSTool v1.0 testing/developer preview\n" +
+                                      "Please address comments questions to: \n" +
+                                      "    John-Charles D. Sokolow <z1552897@students.niu.edu>");
         
       }   
     
