@@ -140,6 +140,11 @@ public class MainFrame extends JFrame {
   /* This is the main invocation for the entire application */  
   public static void main(String[] args){
     
+    final String messageText = 
+      "MVSTool v1.0 testing/developer preview\n" +
+      "Please address comments questions to: \n" +
+      "    John-Charles D. Sokolow <z1552897@students.niu.edu>";
+    
     SetLookAndFeel.set();
     
     SwingUtilities.invokeLater(new Runnable() {
@@ -152,9 +157,7 @@ public class MainFrame extends JFrame {
         frame = new MainFrame();
         frame.setVisible(true);
         
-        JOptionPane.showMessageDialog(frame, "MVSTool v1.0 testing/developer preview\n" +
-                                      "Please address comments questions to: \n" +
-                                      "    John-Charles D. Sokolow <z1552897@students.niu.edu>");
+        JOptionPane.showMessageDialog(frame, messageText);
         
       }   
     

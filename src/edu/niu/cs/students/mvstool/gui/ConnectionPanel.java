@@ -38,6 +38,8 @@ import edu.niu.cs.students.mvstool.ConnectionProfile;
 
 class ConnectionPanel extends JPanel {
   
+  JButton connect;
+  
   JTextField hostname;
   JTextField hostport;
   JTextField username;
@@ -47,7 +49,6 @@ class ConnectionPanel extends JPanel {
   
   public ConnectionPanel(GUIJobListPanel jobList){
     
-    //Dimension size = new Dimension(650, 60);
     ConnectionProfile profile = ConnectionProfile.getConnectionProfile();
     
     this.jobList = jobList;
@@ -58,7 +59,6 @@ class ConnectionPanel extends JPanel {
     username = new JTextField(profile.getUsername());
     password = new JPasswordField(profile.getPassword());
     
-    //setBorder(new EmptyBorder(new Insets(10, 10, 10, 10)));
     setLayout(new GridBagLayout());
     
     GridBagConstraints c = new GridBagConstraints();
@@ -139,13 +139,15 @@ class ConnectionPanel extends JPanel {
    * it works! so I'm keeping it! */
   private JButton buildConnectionTrigger(){
     
-    JButton connect = new JButton("Connect");
+    connect = new JButton("Connect");
     
     connect.addActionListener(new ActionListener(){
       
       public void actionPerformed(ActionEvent event){
         
         ConnectionProfile profile = ConnectionProfile.getConnectionProfile();
+        
+        connect.setText("Refresh");
         
         profile.setHostname(hostname.getText());
         profile.setHostport(hostport.getText());
