@@ -126,13 +126,13 @@ public abstract class MVSJobListParser implements FTPListParser {
     
     if(matcher.find()){
       
-      System.out.println("match found!");
+      //System.out.println("match found!");
       
       int i;
       
       for(i = 1; i <= matcher.groupCount(); i++){
           
-        System.out.println("group(" + i + "): '" + matcher.group(i) + "'");
+        //System.out.println("group(" + i + "): '" + matcher.group(i) + "'");
         jobInfo[i -1] = matcher.group(i);
           
       }
@@ -143,7 +143,7 @@ public abstract class MVSJobListParser implements FTPListParser {
       
       Job job = new Job(jobInfo);
       
-      System.out.println(job);
+      //System.out.println(job);
       
       jobs.add(job);
         

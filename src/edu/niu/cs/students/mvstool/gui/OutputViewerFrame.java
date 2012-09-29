@@ -22,6 +22,12 @@ package edu.niu.cs.students.mvstool.gui;
 import java.io.File;
 import java.io.IOException;
 
+import java.util.List;
+import java.util.ArrayList;
+
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
@@ -32,10 +38,20 @@ import javax.swing.JOptionPane;
 import javax.swing.JFileChooser;
 import javax.swing.SwingUtilities;
 
+import javax.swing.text.Highlighter.HighlightPainter;
+import javax.swing.text.DefaultHighlighter.DefaultHighlightPainter;
+
 import java.awt.Font;
+import java.awt.Color;
+import java.awt.Rectangle;
 import java.awt.BorderLayout;
+import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowEvent;
+import java.awt.GridBagConstraints;
+
+
+import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.ActionListener;
 
@@ -51,6 +67,19 @@ public class OutputViewerFrame extends JFrame {
   
   private Job  job;
   private File tempFile;
+  
+  private int currError;
+  private int errorCount;
+  
+  
+  private List<Integer> errorAreas;
+  
+  private JTextArea textArea;
+  private JLabel errorCountLabel;
+  
+  private static final String _p = "(\\=\\=[0-9]+\\=\\=.*\\s\\s.*)$";
+  private static final Pattern cobolErrorPattern = Pattern.compile(_p,Pattern.MULTILINE); 
+    
   
   /* Creates the new frame but doesn't show it until it's invoked
    * by the swing event queue, I'm not sure if this is technically
@@ -77,16 +106,20 @@ public class OutputViewerFrame extends JFrame {
   /* This  creates the new frame, but does not initialize the GUI
    * in any way, see activeateFrame for gui initialization */
   private OutputViewerFrame(File tempFile, Job job){
-    super("JCL Output Viewer");
+    super("Job Output Viewer");
     this.job = job;
     this.tempFile = tempFile;
     setLayout(new BorderLayout());
+    
+    currError = 0;
     
   }
   
   /* This updates, and shows the ui in the main AWT thread */
   private void activateFrame(){
     setSize(700, 400);
+    
+    errorAreas = new ArrayList<Integer>();
     
     System.out.println("job saved to: " + tempFile);
     
@@ -115,14 +148,112 @@ public class OutputViewerFrame extends JFrame {
     });
     
   }
+  
+  private void blinkNoErrors(){
+    
+    for(int i = 0; i < 5; i++){
+      
+      errorCountLabel.setBackground(Color.YELLOW);
+      errorCountLabel.updateUI();      
+      
+    }    
+    
+  }
+  
+  private void moveToError(int moveAmt){
+    
+    if(errorAreas.size() == 0){
+      
+      blinkNoErrors();
+      
+    } else {
+      
+      currError = (currError + moveAmt) % errorAreas.size();
+      
+      int start = errorAreas.get(currError).intValue();
+      
+      try {
+        
+        textArea.scrollRectToVisible(textArea.modelToView(start));
+        
+      } catch(Exception ex){
+        
+        ex.printStackTrace();
+        
+      }
+      
+    }
+  }
+    
+    
+  
+  private JButton buildPrevErrorButton(){
+    
+    JButton button = new JButton("<<");
+    
+    button.addActionListener(new ActionListener(){
+      
+      public void actionPerformed(ActionEvent e){
+        
+        moveToError(-1);
+        
+      }     
+      
+    });
+    
+    
+    return button;
+    
+  }
+  
+  private JButton buildNextErrorButton(){
+    
+    JButton button = new JButton(">>");
+    
+    button.addActionListener(new ActionListener(){
+      
+      public void actionPerformed(ActionEvent e){
+        
+        moveToError(1);
+        
+      }
+      
+    });
+    
+    return button;
+    
+  }
+  
+  private JPanel buildErrorBar(){
+    
+    errorCountLabel = new JLabel("0 Errors found!");
+    
+    errorCountLabel.setOpaque(true);
+    errorCountLabel.setBackground(Color.GREEN);
+    
+    JPanel toolbar = new JPanel(new BorderLayout());
+        
+    toolbar.add(buildPrevErrorButton(), BorderLayout.WEST);
+    
+    toolbar.add(errorCountLabel, BorderLayout.CENTER);
+        
+    toolbar.add(buildNextErrorButton(), BorderLayout.EAST);
+    
+    return toolbar;
+    
+  }
     
   /* Pretty self explanatory, it builds the toolbar with the 
    * job name, and save button. */
   private JPanel buildToolBar(){
     
     JPanel toolbar = new JPanel(new BorderLayout());
+    
+    JPanel infoBar = new JPanel(new BorderLayout());
+    
     JButton saveButton = new JButton("Save output to file");
     
+       
     saveButton.addActionListener(new ActionListener(){
       
       public void actionPerformed(ActionEvent e){
@@ -133,18 +264,68 @@ public class OutputViewerFrame extends JFrame {
       
     });
     
-    toolbar.add(new JLabel("Output for job id: " + job.getID()), BorderLayout.WEST);
-    toolbar.add(saveButton, BorderLayout.EAST);
+    infoBar.add(new JLabel("Output for job id: " + job.getID()), BorderLayout.WEST);
+    infoBar.add(saveButton, BorderLayout.EAST);
     
+    toolbar.add(infoBar, BorderLayout.NORTH);
+    toolbar.add(buildErrorBar(), BorderLayout.SOUTH);
     
     return toolbar;
     
   }
   
+  private void highlightArea(int start, int end){
+    
+    System.out.println("Start: " + start + " End: " + end);
+    
+    HighlightPainter painter = new DefaultHighlightPainter(Color.RED);    
+    
+    errorAreas.add(new Integer(end));
+    
+    try {
+      
+      textArea.getHighlighter().addHighlight(start, end, painter);
+      
+    } catch(Exception e){
+      /* */
+    }
+    
+    errorCount = errorCount + 1;
+    
+    errorCountLabel.setOpaque(true);
+    errorCountLabel.setBackground(Color.RED);
+    errorCountLabel.setText(errorCount + " Errors found!");
+    
+  }
+  
+  private void highlightCobolErrors(String text){
+    
+    System.out.println("highlightCobolErrors!");
+    
+    Matcher m = cobolErrorPattern.matcher(text);
+    
+    while(m.find()){
+      
+      highlightArea(m.start(), m.end());
+      
+    }
+    
+  } 
+  
+  private void findAreasToHighlight(String text){
+    
+    highlightCobolErrors(text);
+    
+  }
+  
   private JScrollPane buildTextArea(){
     
-    String text = Utils.loadFileToString(tempFile);    
-    JTextArea textArea = new JTextArea(text);   
+    String text = Utils.loadFileToString(tempFile); 
+    
+    textArea = new JTextArea(text);  
+    
+    findAreasToHighlight(text);
+    
     textArea.setFont(new Font("Monospaced", Font.PLAIN, 12));
     return new JScrollPane(textArea);
     
@@ -183,6 +364,10 @@ public class OutputViewerFrame extends JFrame {
       
     }
     
+  }
+  
+  public static void main(String[] args){
+    edu.niu.cs.students.mvstool.gui.MainFrame.main(args);
   }
   
 }
