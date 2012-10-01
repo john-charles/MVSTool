@@ -9,7 +9,7 @@ package edu.niu.cs.students.mvstool.mvsftp;
  * by the Free Software Foundation; either version 2 of the License,   *
  * or (at your option) any later version.                              *
  *                                                                     *
- * MVSTool is distributed in the hope that it will be useful, but    *
+ * MVSTool is distributed in the hope that it will be useful, but      *
  * WITHOUT ANY WARRANTY; without even the implied warranty of          *
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU    *
  * General Public License for more details.                            *
@@ -105,32 +105,28 @@ public abstract class MVSJobDownloader extends FTPRunnable {
   }
   
   public void run(){
-    
-    synchronized(client){
+   
+    try {
       
-      try {
+      
+      LineInput in = new CRLFLineInput(client.getJob(job));
+      
+      String line = in.recv();
+      
+      while(line != null){
         
-               
-        LineInput in = new CRLFLineInput(client.getJob(job));
-        
-        String line = in.recv();
-                
-        while(line != null){
-          
-          write(processLine(line));
-          line = in.recv();
-        }
-        
-        in.close();
-        out.close();
-        
-        success();
-        
-      } catch(Exception e){
-        e.printStackTrace();
-        failure(e);
-        
+        write(processLine(line));
+        line = in.recv();
       }
+      
+      in.close();
+      out.close();
+      
+      success();
+      
+    } catch(Exception e){
+      e.printStackTrace();
+      failure(e);
       
     }
     

@@ -9,7 +9,7 @@ package edu.niu.cs.students.netio;
  * by the Free Software Foundation; either version 2 of the License,   *
  * or (at your option) any later version.                              *
  *                                                                     *
- * MVSTool is distributed in the hope that it will be useful, but    *
+ * MVSTool is distributed in the hope that it will be useful, but      *
  * WITHOUT ANY WARRANTY; without even the implied warranty of          *
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU    *
  * General Public License for more details.                            *
@@ -21,6 +21,8 @@ package edu.niu.cs.students.netio;
  ***********************************************************************/
 import java.io.InputStream;
 import java.io.IOException;
+
+import edu.niu.cs.students.netio.EOFException;
 
 class ByteInput {
   
@@ -41,18 +43,21 @@ class ByteInput {
     * Throws: This method may throw java.io.IOException if the the socket throws *
     *         an IOException.                                                    *
     ******************************************************************************/
-  protected int getByte() throws IOException {
-    /* This works, it's not pretty...  */
-    int read = input.read();
-    //System.out.println("available: " + input.available());
+  protected int getByte() throws IOException, EOFException {
+    /* This looks odd, but it is needed. Instead of calling read() and getting
+     * and int and supposedly checking for -1 we must do this instead. Because
+     * the -1 thing is not working, and fails al the time. Technically this is
+     * not the correct way to do it either, but it seems to work. Basically if
+     * the read does not read 1 byte, throw an EOFException which is caught and
+     * interepreted by the caller as signaling end of file, and handled properly
+     * there. */
+    byte[] buff = new byte[1];
     
-    if(read < 0 || read > 255){
-      System.out.println("EOF allegedly reached, read = " + read);
-      System.out.println("input.available() = " + input.available());
-      return -1;
+    if(input.read(buff) != 1){
+      throw new EOFException();
     }
-    
-    return (byte)read;
+            
+    return buff[0];   
     
   }
   
@@ -61,5 +66,3 @@ class ByteInput {
   }
   
 }
-  
-  

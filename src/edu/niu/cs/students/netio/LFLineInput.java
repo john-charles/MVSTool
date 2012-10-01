@@ -34,8 +34,9 @@ public class LFLineInput extends ByteInput
   
   public String recv() throws IOException { 
        
-    String response = "";
-    int curByte = getByte();
+    throw new IOException("Note Implemented!");
+    /*String response = "";
+    int curByte; = getByte();
     if(curByte <= 0){
       return null;
       
@@ -56,7 +57,7 @@ public class LFLineInput extends ByteInput
     }
     
     return response;
-    
+  */  
   }
   
 }

@@ -43,43 +43,45 @@ public class CRLFLineInput extends ByteInput
     ******************************************************************************/  
   public String recv() throws IOException {
     
-    
-    
     boolean crFound = false;
     String response = new String();
+    int curByte;
     
-    int curByte = getByte();
-    
-    if(curByte == -1){
-      System.out.println("curByte = " + curByte);
-      return null;
-    }
-    
-    while(curByte != -1){
+    while(true){
       
-      response = response + (char)curByte;
-      /* The following is logic to determine if we have successfully
-       * encountered a CRLF secquence.
-       * 
-       * if the current byte is a CR it sets a flag,
-       * if the current byte is a LF and the flag is set
-       *    we break if the flag is set and the current
-       *    byte is not LF then we unset the flag. */
-      if(curByte == CR)
-        crFound = true; 
-      else
-        if(curByte == LF && crFound)
+      try {
+        
+        curByte = getByte();
+        
+        response = response + (char)curByte;
+        /* The following is logic to determine if we have successfully
+         * encountered a CRLF secquence.
+         * 
+         * if the current byte is a CR it sets a flag,
+         * if the current byte is a LF and the flag is set
+         *    we break if the flag is set and the current
+         *    byte is not LF then we unset the flag. */
+        if(curByte == CR)
+          crFound = true; 
+        else
+          if(curByte == LF && crFound)
+          break;
+        else
+          crFound = false;
+        
+        /* This works.... well, sort of, sometimes it returns
+         * the null string "", I don't know why that is though! */
+      } catch(EOFException e){
         break;
-      else
-        crFound = false;
+      }
       
-      curByte = getByte();
-      /* This works.... well, sort of, sometimes it returns
-       * the null string "", I don't know why that is though! */
     }   
     
-    
-    return response;
+    if(response.equals("")){
+      return null;
+    } else {
+      return response;
+    }
     
   }  
 }

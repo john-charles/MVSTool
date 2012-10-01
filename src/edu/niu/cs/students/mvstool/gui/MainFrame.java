@@ -51,10 +51,10 @@ public class MainFrame extends JFrame {
   
   public MainFrame(){
     
-    super.setTitle("MVS Tool");
-    super.setSize(700,400);
-    super.setLocationRelativeTo(null);
-    super.setJMenuBar(this.buildMenuBar());
+    setTitle("MVS Tool");
+    setSize(700,400);
+    setLocationRelativeTo(null);
+    setJMenuBar(this.buildMenuBar());
     
     getContentPane().setLayout(new BorderLayout());
     
