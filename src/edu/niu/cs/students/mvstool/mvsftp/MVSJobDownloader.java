@@ -70,24 +70,33 @@ public abstract class MVSJobDownloader extends FTPRunnable {
   }
   
   private String newPage(){
-    return "";
+    return CRLF + CRLF  + CRLF;
     //return CRLF + "------------------------ Page " + (page++) + " -----------------------" + CRLF;
-    
+    // + "\f"
   }
   
   private String processLine(String line){
-//    if(line.equals("")){
-//      return line;
-//    }
+    
+    if(line.equals("")){
+      return line;
+    }
+        
+    line = line.replace("\r", "");
+    line = line.replace("\n", "");
+    
+    
+    
     char ccChar = line.charAt(0);
-    line = line.substring(1, line.length()).trim();
+    line = line.substring(1, line.length());
     
     if(ccChar == '0'){
-      line = line + CRLF;
+      line = CRLF + CRLF + line;
     } else if(ccChar == '-'){
-      line = line + CRLF + CRLF;
+      line = CRLF + CRLF + CRLF + line;
     } else if(ccChar == '1'){
       line = newPage() + line;
+    } else if(ccChar == ' '){
+      line = CRLF + line;
     }
     
     /* This is a little hack to make all lines of jcl lign up correctly... */
@@ -100,7 +109,7 @@ public abstract class MVSJobDownloader extends FTPRunnable {
       line = "  " + line;
     }
                 
-    return line + CRLF;
+    return line;
     
   }
   
@@ -130,6 +139,10 @@ public abstract class MVSJobDownloader extends FTPRunnable {
       
     }
     
+  }
+  
+  public static void main(String[] args) throws Exception {
+    edu.niu.cs.students.mvstool.gui.MainFrame.main(args);   
   }
     
 }

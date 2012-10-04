@@ -36,6 +36,7 @@ import javax.swing.JScrollPane;
 import edu.niu.cs.students.mvstool.ConnectionProfile;
 
 import edu.niu.cs.students.mvstool.gui.GUIJobLister;
+import edu.niu.cs.students.mvstool.gui.JobListPopupMenu;
 import edu.niu.cs.students.mvstool.gui.ImmutableTableModel;
 
 //import edu.niu.cs.students.mvstool.ftp.FTPClient;
@@ -50,11 +51,13 @@ import edu.niu.cs.students.mvstool.mvsftp.MVSJobListParser.Job;
 class GUIJobListPanel extends JPanel {
   
   private JTable  table;
+  private GUIJobListPanel  self;
   private JScrollPane scrollPane;
   private ImmutableTableModel tableModel;
   
   public GUIJobListPanel(){
     
+    self = this;
     table = new JTable();
     
     scrollPane = new JScrollPane(table); 
@@ -76,15 +79,42 @@ class GUIJobListPanel extends JPanel {
         }
         
       }
-    });
+      
+      public void mousePressed(MouseEvent e){
+        
+        if(e.isPopupTrigger()){
+          rightClick(e);
+        }
+      }
+      
+      public void mouseReleased(MouseEvent e){
+        
+        if(e.isPopupTrigger()){
+          rightClick(e);
+        }
+        
+      }
+      
+      
+      private void rightClick(MouseEvent e){
+        
+        int r = table.rowAtPoint(e.getPoint());        
+        table.setRowSelectionInterval(r, r);
 
+        
+        JobListPopupMenu menu = new JobListPopupMenu(e, tableModel, self);
+        
+        menu.show(e.getComponent(), e.getX(), e.getY());
+        
+      }     
+    });
     
     setLayout(new BorderLayout());
     add(scrollPane, BorderLayout.CENTER);
     
-  }  
+  }
   
-  private void onRowClicked(Job job){
+  public void onRowClicked(Job job){
     
     try {
       
@@ -145,6 +175,10 @@ class GUIJobListPanel extends JPanel {
     
     
     
+  }
+  
+  public static void main(String[] args){
+    edu.niu.cs.students.mvstool.gui.MainFrame.main(args);
   }
   
   

@@ -207,16 +207,33 @@ public class ConnectionProfile {
     
   }   
   
-  private boolean isConnected() throws IOException {
+  private boolean isConnected() throws IOException, FTPException {
     
     if(getTime() - ftpLastUsed > ftpTimeOut){
       if(ftpClient != null){
-        ftpClient.close();
+        try {
+          ftpClient.close();
+        } catch(IOException e){
+          ftpClient = null;
+        }
       }
+      
       return false;
+    
     } else if(ftpClient == null){
       return false;
     } else {
+      
+      try {
+        
+        ftpClient.noop();
+        
+      } catch(IOException e){
+        
+        return false;
+        
+      }
+      
       return true;
     }
     
