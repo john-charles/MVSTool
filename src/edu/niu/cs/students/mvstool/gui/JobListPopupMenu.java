@@ -10,7 +10,7 @@ import java.awt.event.ActionListener;
 
 import edu.niu.cs.students.mvstool.gui.GUIJobListPanel;
 import edu.niu.cs.students.mvstool.gui.ImmutableTableModel;
-import edu.niu.cs.students.mvstool.mvsftp.MVSJobListParser.Job;
+//import edu.niu.cs.students.mvstool.mvsftp.MVSJobListParser.Job;
 
 class JobListPopupMenu extends JPopupMenu {
   
@@ -39,9 +39,9 @@ class JobListPopupMenu extends JPopupMenu {
       public void actionPerformed(ActionEvent e){
         
         int row = ((JTable)cause.getSource()).getSelectedRow();
-        Job job = tableModel.getJobAt(row);
+        //MVSJob job = tableModel.getJobAt(row);
           
-        p.onRowClicked(job);
+        //p.onRowClicked(job);
         
       }
       

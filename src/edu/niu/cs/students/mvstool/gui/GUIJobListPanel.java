@@ -33,17 +33,18 @@ import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 
 
-import edu.niu.cs.students.mvstool.ConnectionProfile;
 
-import edu.niu.cs.students.mvstool.gui.GUIJobLister;
+import edu.niu.cs.students.mvstool.Profile;
+
+//import edu.niu.cs.students.mvstool.gui.GUIJobLister;
 import edu.niu.cs.students.mvstool.gui.JobListPopupMenu;
 import edu.niu.cs.students.mvstool.gui.ImmutableTableModel;
 
 //import edu.niu.cs.students.mvstool.ftp.FTPClient;
 
-import edu.niu.cs.students.mvstool.mvsftp.MVSFTPClient;
+import edu.niu.cs.students.mvs.MVSClient;
 //import edu.niu.cs.students.mvstool.mvsftp.MVSJobDownloader;
-import edu.niu.cs.students.mvstool.mvsftp.MVSJobListParser.Job;
+import edu.niu.cs.students.mvs.MVSJob;
 
 /****************************************************
   * This class displays the list of downloaded jobs *
@@ -72,7 +73,7 @@ class GUIJobListPanel extends JPanel {
         if (e.getClickCount() == 2){
             
           int row = ((JTable)e.getSource()).getSelectedRow();
-          Job job = tableModel.getJobAt(row);
+          MVSJob job = tableModel.getJobAt(row);
           
           onRowClicked(job);
           
@@ -114,12 +115,12 @@ class GUIJobListPanel extends JPanel {
     
   }
   
-  public void onRowClicked(Job job){
+  public void onRowClicked(MVSJob job){
     
     try {
       
-      MVSFTPClient client = ConnectionProfile.getConnectionProfile().getFTPClient();
-      new Thread(new JobDownloader(job, client, this)).start();
+      MVSClient client = ConnectionProfile.getConnectionProfile().getFTPClient();
+      //new Thread(new JobDownloader(job, client, this)).start();
            
     } catch(Exception e){
       
@@ -136,9 +137,9 @@ class GUIJobListPanel extends JPanel {
    * update the user interface */
   public class Updater implements Runnable {
     
-    private List<Job> jobs;
+    private List<MVSJob> jobs;
     
-    public Updater(List<Job> jobs){
+    public Updater(List<MVSJob> jobs){
       this.jobs = jobs;
     }
     
@@ -151,7 +152,7 @@ class GUIJobListPanel extends JPanel {
   }
   
   
-  public Updater getUpdater(List<Job> jobs){
+  public Updater getUpdater(List<MVSJob> jobs){
     
     return new Updater(jobs);
     
@@ -161,11 +162,7 @@ class GUIJobListPanel extends JPanel {
     
     try {
       
-      MVSFTPClient client = ConnectionProfile.getConnectionProfile().getFTPClient();
-      GUIJobLister lister = new GUIJobLister(this);
-      
-      /* WARNING: This creates a new thread! */
-      client.getJobs(lister);      
+          
            
     } catch(Exception e){
       JOptionPane.showMessageDialog(this, e.toString());

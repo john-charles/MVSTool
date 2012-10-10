@@ -23,8 +23,8 @@ import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
-import edu.niu.cs.students.mvstool.mvsftp.MVSJobListParser;
-import edu.niu.cs.students.mvstool.mvsftp.MVSJobListParser.Job;
+//import edu.niu.cs.students.mvs.MVSJobListParser;
+import edu.niu.cs.students.mvs.MVSJob;
 
 /* This is horriby named, as I didn't fully understand what
  * it was going to be used for, or how it would function
@@ -33,16 +33,17 @@ import edu.niu.cs.students.mvstool.mvsftp.MVSJobListParser.Job;
  * by calling the setJobs method */
 class ImmutableTableModel extends AbstractTableModel {
   
-  private List<Job> jobs;
+  private List<MVSJob> jobs;
   
   @Override
   public String getColumnName(int column){
-    return MVSJobListParser.JobNames[column];
+    return null;
+//return MVSJobListParser.JobNames[column];
   }
   
   @Override
   public int getColumnCount(){
-    return MVSJobListParser.JobNames.length;
+    return 0; //return MVSJobListParser.JobNames.length;
   }
   
   @Override
@@ -58,14 +59,14 @@ class ImmutableTableModel extends AbstractTableModel {
   
   /* call this to update the ui when a new listing
    * is recieved from the server */
-  public void setJobs(List<Job> jobs){
+  public void setJobs(List<MVSJob> jobs){
     
     this.jobs = jobs;
     fireTableDataChanged();
     
   }
   
-  public Job getJobAt(int idx){
+  public MVSJob getJobAt(int idx){
     return jobs.get(idx);
   }
   

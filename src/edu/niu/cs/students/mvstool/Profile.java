@@ -32,7 +32,7 @@ import java.util.Properties;
 import edu.niu.cs.students.ftp.FTPException;
 import edu.niu.cs.students.mvs.MVSClient;
 
-public class ConnectionProfile {
+public class Profile {
   /* Scary, a registry key... this is not used, but I was attempting to make the
    * application "H:" drive aware, in that it would store it's temporary files there
    * instead of %APPDATA%/mvstool this was a disaster, but I may work on it in the
@@ -49,14 +49,14 @@ public class ConnectionProfile {
   boolean ftpIsConnected;
   MVSClient ftpClient;
   
-  static ConnectionProfile gProfile;
+  static Profile gProfile;
   
   /* Returns the singleton connection profile instance... */
-  static public ConnectionProfile getConnectionProfile(){
+  static public Profile getConnectionProfile(){
     
     if(gProfile == null){
       
-      gProfile = new ConnectionProfile();
+      gProfile = new Profile();
       
     }
     
@@ -70,14 +70,14 @@ public class ConnectionProfile {
   
   }
   
-  private ConnectionProfile(){
+  private Profile(){
     this("Default");    
   }
   
   /* I originally wanted to have a method whereby different connection
    * profiles could be specified by the user, I may still do that... 
    * for now profileName is ignored... */
-  private ConnectionProfile(String profileName){
+  private Profile(String profileName){
     
     ftpLastUsed = 0;
     loadProfile();    

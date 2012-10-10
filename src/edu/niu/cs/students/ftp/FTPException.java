@@ -1,4 +1,4 @@
-package edu.niu.cs.students.mvstool.gui;
+package edu.niu.cs.students.ftp;
 /***********************************************************************
  * MVSTool                                                             *
  *                                                                     *
@@ -19,49 +19,15 @@ package edu.niu.cs.students.mvstool.gui;
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 *  
  * USA                                                                 *
  ***********************************************************************/
-import javax.swing.JPanel;
-import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
 
-import java.io.IOException;
-
-//import edu.niu.cs.students.mvstool.gui.OutputViewerFrame;
-//import edu.niu.cs.students.mvstool.mvsftp.MVSFTPClient;
-//import edu.niu.cs.students.mvstool.mvsftp.MVSJobDownloader;
-//import edu.niu.cs.students.mvstool.mvsftp.MVSJobListParser.Job;
-
-//class JobDownloader extends MVSJobDownloader {
-//  
-//  Job job;
-//  JPanel frame;
-//  
-//  public JobDownloader(Job _ob, MVSFTPClient _lient, JPanel _rame) throws IOException {
-//    super(_ob, _lient);
-//    job = _ob;
-//    frame = _rame;
-//  }
-//  
-//  
-//  public void success(){
-//    
-//    OutputViewerFrame.createOutputViewer(getTempFile(), job);
-//    
-//  }
-//  
-//  public void failure(final Exception e){
-//    
-//    SwingUtilities.invokeLater(new Runnable(){
-//      
-//      public void run(){
-//        
-//        JOptionPane.showMessageDialog(frame, e.toString());
-//        
-//      }
-//      
-//    });
-//    
-//  }
-//  
-//}
-//  
+public class FTPException extends Exception {
   
+  public FTPException(){
+    super();
+  }
+  
+  public FTPException(String error){
+    super(error);
+  }
+  
+}
