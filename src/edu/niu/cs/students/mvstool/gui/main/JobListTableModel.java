@@ -1,4 +1,3 @@
-package edu.niu.cs.students.mvstool;
 /***********************************************************************
  * MVSTool                                                             *
  *                                                                     *
@@ -19,78 +18,78 @@ package edu.niu.cs.students.mvstool;
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 *  
  * USA                                                                 *
  ***********************************************************************/
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
+package edu.niu.cs.students.mvstool.gui.main;
 
-/* Catch all class for things that are needed but don't fit anywhere
- * else! */
-public final class Utils {
+import java.util.List;
+
+import javax.swing.SwingUtilities;
+
+import javax.swing.table.AbstractTableModel;
+
+//import edu.niu.cs.students.mvs.MVSJobListParser;
+import edu.niu.cs.students.mvs.MVSJob;
+
+/* This is horriby named, as I didn't fully understand what
+ * it was going to be used for, or how it would function
+ * when I first created it, contrary to being 
+ * immutable it is quite mutable, and can be changed
+ * by calling the setJobs method */
+public class JobListTableModel extends AbstractTableModel {
   
-  public static void sleep(int seconds){
+  private List<MVSJob> jobs;
+  
+  @Override
+  public String getColumnName(int column){
+    return MVSJob.names[column];
+  }
+  
+  @Override
+  public int getColumnCount(){
+    return MVSJob.names.length;
+  }
+  
+  @Override
+  public int getRowCount(){
+    if(jobs == null) return 0;
+    return jobs.size();
+  }
+  
+  @Override
+  public Object getValueAt(int row, int col){
+    return jobs.get(row).toArray()[col];
+  }
+  
+  /* call this to update the ui when a new listing
+   * is recieved from the server */
+  private void setJobs(List<MVSJob> jobs){
     
-    try{
-      
-      Thread.sleep(seconds * 1000);
-      
-    } catch(Exception ie){
-    }
+    this.jobs = jobs;
+    fireTableDataChanged();
     
   }
   
-  public static String loadFileToString(File input){
-    
-    try {
-      
-      InputStream in = new FileInputStream(input);
-      
-      // TODO: Fix this, this is a terrible security and stability
-      //       issue, and should be addressed asap!
-      byte[] data = new byte[(int)input.length()];
-      
-      in.read(data, 0, data.length);
-      
-      in.close();
-      
-      return new String(data);
-      
-    } catch(IOException e){
-      
-      return "Could not load file!";
-      
-    }
-    
+  public MVSJob getJobAt(int idx){
+    return jobs.get(idx);
   }
   
-  public static void copyFile(File src, File dst) throws IOException {
-    
-    InputStream in = new FileInputStream(src);
-    OutputStream out = new FileOutputStream(dst);
-    
-    copyStream(in, out);
-    
-    in.close();
-    out.close();
-    
+  @Override
+  public boolean isCellEditable(int row, int column) {
+    return false;
   }
   
-  public static void copyStream(InputStream in, OutputStream out)
-    throws IOException {
+  public void update(final List<MVSJob> jobs){
     
-    byte[] buffer = new byte[4096];
-    
-    int read = in.read(buffer);
-    
-    while(read > 0){
+    SwingUtilities.invokeLater(new Runnable(){
       
-      out.write(buffer, 0, read);
-      read = in.read(buffer);
+      public void run(){
+        
+        setJobs(jobs);
+        
+      }
       
-    }
+    });
     
   }
+    
   
 }

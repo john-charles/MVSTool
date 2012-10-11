@@ -1,4 +1,3 @@
-package edu.niu.cs.students.mvstool;
 /***********************************************************************
  * MVSTool                                                             *
  *                                                                     *
@@ -19,78 +18,42 @@ package edu.niu.cs.students.mvstool;
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 *  
  * USA                                                                 *
  ***********************************************************************/
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
+package edu.niu.cs.students.mvstool.gui.aux;
 
-/* Catch all class for things that are needed but don't fit anywhere
- * else! */
-public final class Utils {
+import javax.swing.JPanel;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import java.awt.BorderLayout;
+import javax.swing.BorderFactory;
+
+public class AboutBox extends JFrame {
   
-  public static void sleep(int seconds){
+  public AboutBox(){
     
-    try{
-      
-      Thread.sleep(seconds * 1000);
-      
-    } catch(Exception ie){
-    }
+    super.setTitle("About MVS Tool");
     
-  }
-  
-  public static String loadFileToString(File input){
+    String aboutDetails = "<html>" + 
+      "MVS Tool 1.0 (c) 2012<br><br><br>" +
+      "License information:<br><br>" +
+      "Copyright (c) 2012 John-Charles D. Sokolow<br>" +
+      "Redistribute under terms of GTPv2... " +
+      "</html>";     
     
-    try {
-      
-      InputStream in = new FileInputStream(input);
-      
-      // TODO: Fix this, this is a terrible security and stability
-      //       issue, and should be addressed asap!
-      byte[] data = new byte[(int)input.length()];
-      
-      in.read(data, 0, data.length);
-      
-      in.close();
-      
-      return new String(data);
-      
-    } catch(IOException e){
-      
-      return "Could not load file!";
-      
-    }
+    JPanel panel = new JPanel(); 
     
-  }
-  
-  public static void copyFile(File src, File dst) throws IOException {
     
-    InputStream in = new FileInputStream(src);
-    OutputStream out = new FileOutputStream(dst);
+    panel.setLayout(new BorderLayout(10, 10));
     
-    copyStream(in, out);
+    JLabel lAboutDetails = new JLabel(aboutDetails);
     
-    in.close();
-    out.close();
-    
-  }
-  
-  public static void copyStream(InputStream in, OutputStream out)
-    throws IOException {
-    
-    byte[] buffer = new byte[4096];
-    
-    int read = in.read(buffer);
-    
-    while(read > 0){
-      
-      out.write(buffer, 0, read);
-      read = in.read(buffer);
-      
-    }
+    panel.add(lAboutDetails, BorderLayout.CENTER);
+    panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+    super.add(panel);
+    super.pack();
     
   }
   
 }
+  
+  
+  

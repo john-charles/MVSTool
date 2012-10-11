@@ -1,4 +1,3 @@
-package edu.niu.cs.students.mvstool;
 /***********************************************************************
  * MVSTool                                                             *
  *                                                                     *
@@ -19,78 +18,71 @@ package edu.niu.cs.students.mvstool;
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 *  
  * USA                                                                 *
  ***********************************************************************/
+package edu.niu.cs.students.mvstool.tasks;
+
+import javax.swing.JPanel;
+import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 
-/* Catch all class for things that are needed but don't fit anywhere
- * else! */
-public final class Utils {
+import edu.niu.cs.students.task.Task;
+
+import edu.niu.cs.students.mvs.MVSJob;
+import edu.niu.cs.students.mvs.MVSClient;
+
+import edu.niu.cs.students.mvstool.Utils;
+import edu.niu.cs.students.mvstool.Profile;
+import edu.niu.cs.students.mvstool.gui.GUIUtils;
+import edu.niu.cs.students.mvstool.gui.OutputViewerFrame;
+
+
+public class GetJobOutputTask extends Task {
   
-  public static void sleep(int seconds){
-    
-    try{
+  File file;
+  MVSJob job;
       
-      Thread.sleep(seconds * 1000);
-      
-    } catch(Exception ie){
-    }
+  public GetJobOutputTask(MVSJob job){
     
+    this.job = job;        
   }
   
-  public static String loadFileToString(File input){
+  public void run() throws Exception {
     
-    try {
-      
-      InputStream in = new FileInputStream(input);
-      
-      // TODO: Fix this, this is a terrible security and stability
-      //       issue, and should be addressed asap!
-      byte[] data = new byte[(int)input.length()];
-      
-      in.read(data, 0, data.length);
-      
-      in.close();
-      
-      return new String(data);
-      
-    } catch(IOException e){
-      
-      return "Could not load file!";
-      
-    }
+    file = File.createTempFile("mvsftp","out");
     
-  }
-  
-  public static void copyFile(File src, File dst) throws IOException {
+    MVSClient client = Profile.getCurrentProfile().getMVSClient();
     
-    InputStream in = new FileInputStream(src);
-    OutputStream out = new FileOutputStream(dst);
+    OutputStream out = new FileOutputStream(file);
+    InputStream in = client.getJob(job);
     
-    copyStream(in, out);
+    Utils.copyStream(in, out);
     
     in.close();
     out.close();
     
+    Profile.getCurrentProfile().putMVSClient(client);
+    
+    
   }
   
-  public static void copyStream(InputStream in, OutputStream out)
-    throws IOException {
+  
+  public void success(){
     
-    byte[] buffer = new byte[4096];
+    OutputViewerFrame.createOutputViewer(file, job);
     
-    int read = in.read(buffer);
+  }
+  
+  public void failure(final Exception e){
     
-    while(read > 0){
-      
-      out.write(buffer, 0, read);
-      read = in.read(buffer);
-      
-    }
+    GUIUtils.postMessage(e.getMessage());
     
   }
   
 }
+  
+  

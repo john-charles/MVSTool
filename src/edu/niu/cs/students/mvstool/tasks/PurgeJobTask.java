@@ -8,7 +8,7 @@
  * by the Free Software Foundation; either version 2 of the License,   *
  * or (at your option) any later version.                              *
  *                                                                     *
- * MVSTool is distributed in the hope that it will be useful, but    *
+ * MVSTool is distributed in the hope that it will be useful, but      *
  * WITHOUT ANY WARRANTY; without even the implied warranty of          *
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU    *
  * General Public License for more details.                            *
@@ -20,49 +20,51 @@
  ***********************************************************************/
 package edu.niu.cs.students.mvstool.tasks;
 
-import java.io.File;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.FileInputStream;
-
-import edu.niu.cs.students.ftp.FTPClient;
-import edu.niu.cs.students.ftp.FTPException;
-
 import edu.niu.cs.students.task.Task;
 
+import edu.niu.cs.students.mvs.MVSJob;
+import edu.niu.cs.students.mvs.MVSClient;
 
-public class SubmitJobTask extends Task {
+import edu.niu.cs.students.mvstool.Profile;
+import edu.niu.cs.students.mvstool.gui.GUIUtils;
+import edu.niu.cs.students.mvstool.tasks.GetJobListTask;
+import edu.niu.cs.students.mvstool.gui.main.JobListTableModel;
+
+
+
+public class PurgeJobTask extends Task {
   
-  private File file;
-  private FTPClient ftp;
+  MVSJob job;
+  JobListTableModel tableModel;
   
-  public SubmitJobTask(FTPClient ftp, File file){
+  public PurgeJobTask(MVSJob job, JobListTableModel tableModel){
     
-    this.ftp = ftp;
-    this.file = file;
+    this.job = job;
+    this.tableModel = tableModel;
     
   }
   
   public void run() throws Exception {
     
-    //OutputStream jobStream = ftp.putFile();
+    MVSClient client = Profile.getCurrentProfile().getMVSClient();
     
+    client.purgeJob(job);
     
+    Profile.getCurrentProfile().putMVSClient(client);
     
   }
   
   public void failure(Exception e){
     
+    GUIUtils.postMessage(e.getMessage());
+    
   }
   
   public void success(){
     
+    Task.fire(new GetJobListTask(tableModel, true));
+    
   }
   
+  
 }
-    
-    
-    
-    
-  
-  

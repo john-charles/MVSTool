@@ -2,6 +2,7 @@ package edu.niu.cs.students.mvs;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 
 import edu.niu.cs.students.ftp.FTPClient;
 import edu.niu.cs.students.ftp.FTPException;
@@ -14,6 +15,10 @@ public class MVSClient extends FTPClient {
     super(hostname, port);
   }
   
+  
+  public String recv() throws IOException {
+    return super.recv();
+  }
   
   public void setModeJES()
     throws FTPException, MVSException, IOException {
@@ -52,11 +57,29 @@ public class MVSClient extends FTPClient {
   public InputStream getJob(MVSJob job)
     throws IOException, FTPException, MVSException {
     
-    goodJob(job);
-    
+    goodJob(job);    
     setModeJES();
     
     return getFile(job.getID(), 'A');
+    
+  }
+  
+  public void purgeJob(MVSJob job)
+    throws IOException, FTPException, MVSException {
+    
+    goodJob(job);
+    setModeJES();
+    
+    delete(job.getID());
+    
+  }
+  
+  public OutputStream subJob()
+    throws IOException, FTPException, MVSException {
+    
+    setModeJES();
+    
+    return putFile("",'A');
     
   }
     

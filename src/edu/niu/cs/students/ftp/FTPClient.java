@@ -19,9 +19,13 @@ package edu.niu.cs.students.ftp;
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 *  
  * USA                                                                 *
  ***********************************************************************/
+
+import java.util.LinkedList;
+
 import java.net.Socket;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.PushbackInputStream;
 //import java.io.OutputStream;
 
@@ -67,42 +71,26 @@ public class FTPClient {
     
   }
   
-  protected String recv() throws IOException {
+   /*********************************************************************
+    *                                                                  *
+    * closes the ftp connection first executing a proper quit command. *
+    *                                                                  *
+    ********************************************************************/
+  public void close() throws IOException {
     
-    String resp = serverrecv.recv();
-    
-    if(resp == null){
-      throw new IOException("Recieved a null!");
-    }
-    
-    System.out.println("=> " + resp.trim());
-    
-    return resp;
+    exec("QUIT");
+    serverconn.close();
     
   }
   
-  /*******************************************************************************
-    *                                                                            *
-    * send(String); Sends one message to the server, a message is considered all *
-    *               text before the CRLF (carriage return, line feed), note that *
-    *               if the message does not end with a CRLF, or if the message   *
-    *               ends only with an LF this method will append the proper CRLF *
-    *               secquence to the end of the message.                         *
-    *                                                                            *
-    * Throws: java.io.IOException                                                *
-    *                                                                            *
-    * ****************************************************************************/
-  protected void send(String cmd) throws IOException {
+  public void delete(String path)
+    throws IOException, FTPException {
     
-    System.out.print("Executing command: ");
+    String resp = exec(String.format("DELE %s", path));
     
-    if(cmd.startsWith("PASS")){
-      System.out.println("PASS ********");
-    } else {
-      System.out.println(cmd);
+    if(!resp.startsWith("250")){
+      throw new FTPException(resp.trim());
     }
-    
-    serversend.send(cmd);
   }
   
   /*******************************************************************************
@@ -116,11 +104,6 @@ public class FTPClient {
     * ****************************************************************************/
   protected String exec(String cmd) throws IOException {
     
-    /* I had a problem where the app usually worked, but some transfers would 
-     * not, so I decided to ignore the second response from RETR requests, and
-     * just flush the connection with noops before all commands. */
-    flush();
-    
     synchronized(this) {
           
       this.send(cmd);
@@ -130,19 +113,6 @@ public class FTPClient {
     
   }
   
-  public String quote(String cmd) throws IOException {
-    
-    return exec(String.format("SITE %s", cmd));
-    
-  }
-    
-  /* Older name for exec, used in some of the older code */
-  /* by older i mean several days our hours older */
-  protected String doCMD(String cmd) throws IOException {
-    
-    return exec(cmd);
-    
-  }
   
   /* Some servers like to send random stuff after a connection is made
    * this wades through the muck until that stuff if cleared out 
@@ -172,11 +142,73 @@ public class FTPClient {
     
   }
   
-  public void noop() throws IOException, FTPException {
+  public String[] finishTransfer()
+    throws IOException, FTPException {
     
-    flush();
+    LinkedList<String> resps = new LinkedList<String>();
     
-  }
+    String resp = recv();
+    
+    while(resp.startsWith("250-")){
+      
+      resps.add(resp);
+      resp = recv();
+      
+    }
+    
+    resps.add(resp);
+    
+    return (String[])resps.toArray();
+    
+  }     
+    
+  
+  /* According to the ftp rfc, it is thread safe to 
+   * read this socket asychronously from the control thread
+   * only operations on the control thread need be synchronous. */
+  public InputStream getFile(String path, char type)
+    throws FTPException, IOException {
+    
+    setMode(type);
+      
+    synchronized(this){
+      
+      InputStream in = getPasvSocket().getInputStream();
+      
+      String resp = exec(String.format("RETR %s", path));
+      
+      if(!resp.startsWith("5")){
+        return in;
+      } else {
+        in.close();
+        throw new FTPException(resp.trim());
+      }
+    }
+       
+  } 
+  
+  public LineInput getList(String path)
+    throws IOException, FTPException {
+    
+    synchronized(this){
+      
+      InputStream in = getPasvSocket().getInputStream();
+      
+      String resp = exec(String.format("LIST %s", path));
+      
+      if(resp.startsWith("125")){
+        
+        return new CRLFLineInput(in);
+        
+      } else {
+        
+        throw new FTPException(resp.trim());
+        
+      }
+      
+    }
+    
+  } 
   
   /* Returns a new FTPPasvSocket object based on the 227 response of the 
    * "PASV" ftp command. This is the preferred method for getting a
@@ -196,6 +228,7 @@ public class FTPClient {
     }
     
   }
+  
   
   /* This method logs in the user, using the user's username and password strings */
   public void login(String username, String password) throws IOException, FTPException {
@@ -233,105 +266,102 @@ public class FTPClient {
     
   }
   
+  public void noop() throws IOException, FTPException {
+    
+    flush();
+    
+  }
+  
+  
+  public OutputStream putFile(String path, char mode)
+    throws IOException, FTPException {
+    
+    setMode(mode);
+    
+    FTPPasvSocket sock = getPasvSocket();    
+    OutputStream out = sock.getOutputStream();
+
+    
+    String resp = exec(String.format("STOR %s", path));
+    
+    if(!resp.startsWith("125")){
+      
+      return out;
+      
+    } else {
+      
+      throw new FTPException(resp.trim());
+      
+    }
+    
+  }
+    
+  
+  public String quote(String cmd) throws IOException {
+    
+    return exec(String.format("SITE %s", cmd));
+    
+  }
+  
+  protected String recv() throws IOException {
+    
+    String resp = serverrecv.recv();
+    
+    if(resp == null){
+      throw new IOException("Recieved a null!");
+    }
+    
+    System.out.println("=> " + resp.trim());
+    
+    return resp;
+    
+  }
+  
+  /*******************************************************************************
+    *                                                                            *
+    * send(String); Sends one message to the server, a message is considered all *
+    *               text before the CRLF (carriage return, line feed), note that *
+    *               if the message does not end with a CRLF, or if the message   *
+    *               ends only with an LF this method will append the proper CRLF *
+    *               secquence to the end of the message.                         *
+    *                                                                            *
+    * Throws: java.io.IOException                                                *
+    *                                                                            *
+    * ****************************************************************************/
+  protected void send(String cmd) throws IOException {
+    
+    System.out.print("Executing command: ");
+    
+    if(cmd.startsWith("PASS")){
+      System.out.println("PASS ********");
+    } else {
+      System.out.println(cmd);
+    }
+    
+    serversend.send(cmd);
+  }  
+  
+  
   /* set's the ftp mode to ascii */
   protected void setAscii() throws IOException, FTPException {
     
-    String resp = this.exec("TYPE A");    
+    setMode('A');
+    
+  }
+  
+  protected void setMode(char mode)
+    throws IOException, FTPException {
+    
+    String resp = this.exec(String.format("TYPE %c", mode));
     
     if(!resp.startsWith("2")){
       throw new FTPException(resp.trim());
     }
-    
   }
   
-  
-  public LineInput getList(String path)
-    throws IOException, FTPException {
-    
-    synchronized(this){
-      
-      InputStream in = getPasvSocket().getInputStream();
-      
-      String resp = exec(String.format("LIST %s", path));
-      
-      if(resp.startsWith("200")){
-        
-        return new LFLineInput(in);
-        
-      } else {
-        
-        throw new FTPException(resp.trim());
-        
-      }
-      
-    }
-    
-  }     
-  
-
-  
-  /* According to the ftp rfc, it is thread safe to 
-   * read this socket asychronously from the control thread
-   * only operations on the control thread need be synchronous. */
-  public InputStream getFile(String path, char type)
-    throws FTPException, IOException {
-    
-    String resp = exec(String.format("TYPE %s", type));
-    
-    if(resp.startsWith("200")){
-      
-      synchronized(this){
-      
-        InputStream in = getPasvSocket().getInputStream();
-        PushbackInputStream pin = new PushbackInputStream(in);
-        
-        resp = exec(String.format("RETR %s", path));
-        
-        System.out.println("Trying to read first byte!");
-        
-        byte[] buff = new byte[1];
-        
-        if(pin.read(buff) != 1){
-          throw new IOException("Could not read first byte!");
-        }
-        
-        System.out.println("Read first byte, un-reading!");
-        
-        pin.unread(buff);
-        
-        System.out.println("Getting the 150 resp!");
-        
-        /* Don't read the 250 response, just let the library
-         * flush with noops */        
-        if(!resp.startsWith("5")){
-          return in;
-        } else {
-          in.close();
-          throw new FTPException(resp.trim());
-        }
-      }
-    } else {
-      throw new FTPException(resp.trim());
-    }    
-  }  
-      
-      
-  /*********************************************************************
-    *                                                                  *
-    * closes the ftp connection first executing a proper quit command. *
-    *                                                                  *
-    ********************************************************************/
-  public void close() throws IOException {
-    
-    System.out.println(exec("QUIT"));
-    serverconn.close();
-    
-  }
-
-
   /* Test method, to test this class while it's in development! */
   public static void main(String[] args) throws Exception {
-    edu.niu.cs.students.mvstool.gui.MainFrame.main(args);   
+    //edu.niu.cs.students.mvstool.gui.MainFrame.main(args);   
   }
 
 

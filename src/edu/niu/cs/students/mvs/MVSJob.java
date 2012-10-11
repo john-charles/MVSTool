@@ -5,6 +5,9 @@ package edu.niu.cs.students.mvs;
  * data structures of the whole application! */
 public class MVSJob {
   
+  public static final String[] names =
+  {"Name", "Job ID", "Owner", "Status", "Details"};
+    
   /* I can't figure out how to use a java enum as an array index */
   /* So I am using a public final class instead  */    
   static final int Name   = 0;

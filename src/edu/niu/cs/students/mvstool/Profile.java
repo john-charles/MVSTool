@@ -52,7 +52,7 @@ public class Profile {
   static Profile gProfile;
   
   /* Returns the singleton connection profile instance... */
-  static public Profile getConnectionProfile(){
+  static public Profile getCurrentProfile(){
     
     if(gProfile == null){
       
@@ -207,57 +207,23 @@ public class Profile {
     
   }   
   
-  private boolean isConnected() throws IOException, FTPException {
+  public MVSClient getMVSClient() throws IOException, FTPException {
     
-    if(getTime() - ftpLastUsed > ftpTimeOut){
-      if(ftpClient != null){
-        try {
-          ftpClient.close();
-        } catch(IOException e){
-          ftpClient = null;
-        }
-      }
-      
-      return false;
+    ftpClient = new MVSClient(getHostname(), getHostport());
+    ftpClient.login(getUsername(), getPassword());
     
-    } else if(ftpClient == null){
-      return false;
-    } else {
-      
-      try {
-        
-        ftpClient.noop();
-        
-      } catch(IOException e){
-        
-        return false;
-        
-      }
-      
-      return true;
+    return ftpClient;
+   
+  } 
+  
+  public void putMVSClient(MVSClient client){
+    
+    try {
+      client.close();
+    } catch(Exception e){
     }
     
   }
-  
-  
-  public MVSClient getFTPClient() throws IOException, FTPException {
-    
-    if(!isConnected()){
-      
-      System.out.println("Connection is stale, creating new ftp connection!");
-      
-      ftpClient = new MVSClient(getHostname(), getHostport());
-      ftpClient.login(getUsername(), getPassword());
-      
-    } 
-    
-    ftpLastUsed = getTime();
-    
-    System.out.println("Returning ftpClient");
-    
-    return ftpClient;
-    
-  } 
     
   
   public String getHostname(){
@@ -328,6 +294,31 @@ public class Profile {
     
   }
   
+  private static final String lastSaveKey = "LastSaveLocation";
+  
+  public File getLastOutputSaveFile(){
+    
+    String path = profile.getProperty(lastSaveKey);
+    
+    if(path != null){
+      
+      return new File(path);
+      
+    } else {
+      
+      return null;
+      
+    }
+    
+  }
+  
+  public void setLastOutputSaveFile(File location){
+    
+    profile.setProperty(lastSaveKey, location.toString());    
+    saveProfile();
+    
+  }
+  
   private static final String dontUseGTKLNF = "UseGTKLookAndFeel";
   /* This is all about allowing the user to disable the GTK Look
    * and Feel if it doesn't fit with their desktop...
@@ -354,11 +345,6 @@ public class Profile {
   
   
   public static void main(String[] args){
-    
-    getConnectionProfile();
-    
-    
-    
   }
   
   

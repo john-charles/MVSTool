@@ -3,125 +3,129 @@
   <project autorefresh="false" build="build/" manifest="" root="" work="src/">
     <createjar file="MVSTool.jar" flags="14"/>
     <source>
-      <file active="true" name="src/edu/niu/cs/students/mvstool/gui/GUIJobListPanel.java" package="edu.niu.cs.students.mvstool.gui" timestamp="10-Oct-2012 14:30:01">
-        <select from="1748" to="1748"/>
-        <scroll column="156" row="0"/>
+      <file active="true" name="src/edu/niu/cs/students/mvstool/tasks/GetJobListTask.java" package="edu.niu.cs.students.mvstool.tasks" timestamp="10-Oct-2012 22:21:05">
+        <select from="1504" to="1504"/>
+        <scroll column="53" row="0"/>
       </file>
-      <file name="src/edu/niu/cs/students/task/Task.java" package="edu.niu.cs.students.task" timestamp="05-Oct-2012 12:33:02">
-        <select from="1748" to="1748"/>
-        <scroll column="156" row="0"/>
+      <file name="src/edu/niu/cs/students/task/Task.java" package="edu.niu.cs.students.task" timestamp="10-Oct-2012 20:02:18">
+        <select from="1504" to="1504"/>
+        <scroll column="53" row="0"/>
       </file>
       <file name="src/edu/niu/cs/students/netio/ByteInput.java" package="edu.niu.cs.students.netio" timestamp="30-Sep-2012 20:02:47">
-        <select from="1748" to="1748"/>
-        <scroll column="156" row="0"/>
+        <select from="1504" to="1504"/>
+        <scroll column="53" row="0"/>
       </file>
       <file name="src/edu/niu/cs/students/netio/LineOutput.java" package="edu.niu.cs.students.netio" timestamp="17-Sep-2012 22:27:21">
-        <select from="1748" to="1748"/>
-        <scroll column="156" row="0"/>
+        <select from="1504" to="1504"/>
+        <scroll column="53" row="0"/>
       </file>
-      <file name="src/edu/niu/cs/students/mvstool/Utils.java" package="edu.niu.cs.students.mvstool" timestamp="17-Sep-2012 22:27:21">
-        <select from="1748" to="1748"/>
-        <scroll column="156" row="0"/>
+      <file name="src/edu/niu/cs/students/mvstool/Utils.java" package="edu.niu.cs.students.mvstool" timestamp="10-Oct-2012 20:41:05">
+        <select from="1504" to="1504"/>
+        <scroll column="53" row="0"/>
       </file>
       <file name="src/edu/niu/cs/students/netio/CRLFLineOutput.java" package="edu.niu.cs.students.netio" timestamp="18-Sep-2012 10:04:15">
-        <select from="1748" to="1748"/>
-        <scroll column="156" row="0"/>
+        <select from="1504" to="1504"/>
+        <scroll column="53" row="0"/>
       </file>
       <file name="src/edu/niu/cs/students/netio/LineInput.java" package="edu.niu.cs.students.netio" timestamp="17-Sep-2012 22:27:21">
-        <select from="1748" to="1748"/>
-        <scroll column="156" row="0"/>
-      </file>
-      <file name="src/edu/niu/cs/students/mvstool/gui/SetLookAndFeel.java" package="edu.niu.cs.students.mvstool.gui" timestamp="18-Sep-2012 10:03:50">
-        <select from="1748" to="1748"/>
-        <scroll column="156" row="0"/>
-      </file>
-      <file name="src/edu/niu/cs/students/mvstool/gui/ConnectionPanel.java" package="edu.niu.cs.students.mvstool.gui" timestamp="20-Sep-2012 21:22:01">
-        <select from="1748" to="1748"/>
-        <scroll column="156" row="0"/>
-      </file>
-      <file name="src/edu/niu/cs/students/mvstool/gui/AboutBox.java" package="edu.niu.cs.students.mvstool.gui" timestamp="17-Sep-2012 22:27:21">
-        <select from="1748" to="1748"/>
-        <scroll column="156" row="0"/>
+        <select from="1504" to="1504"/>
+        <scroll column="53" row="0"/>
       </file>
       <file name="src/edu/niu/cs/students/netio/LFLineInput.java" package="edu.niu.cs.students.netio" timestamp="30-Sep-2012 18:51:09">
-        <select from="1748" to="1748"/>
-        <scroll column="156" row="0"/>
+        <select from="1504" to="1504"/>
+        <scroll column="53" row="0"/>
       </file>
       <file name="src/edu/niu/cs/students/netio/EOFException.java" package="edu.niu.cs.students.netio" timestamp="30-Sep-2012 19:05:57">
-        <select from="1748" to="1748"/>
-        <scroll column="156" row="0"/>
+        <select from="1504" to="1504"/>
+        <scroll column="53" row="0"/>
       </file>
       <file name="src/edu/niu/cs/students/netio/CRLFLineInput.java" package="edu.niu.cs.students.netio" timestamp="30-Sep-2012 19:51:05">
-        <select from="1748" to="1748"/>
-        <scroll column="156" row="0"/>
-      </file>
-      <file name="src/edu/niu/cs/students/mvstool/gui/MainFrame.java" package="edu.niu.cs.students.mvstool.gui" timestamp="30-Sep-2012 19:54:08">
-        <select from="1748" to="1748"/>
-        <scroll column="156" row="0"/>
+        <select from="1504" to="1504"/>
+        <scroll column="53" row="0"/>
       </file>
       <file name="src/edu/niu/cs/students/ftp/FTPException.java" package="edu.niu.cs.students.ftp" timestamp="10-Oct-2012 12:31:47">
-        <select from="1748" to="1748"/>
-        <scroll column="156" row="0"/>
+        <select from="1504" to="1504"/>
+        <scroll column="53" row="0"/>
       </file>
       <file name="src/edu/niu/cs/students/ftp/FTPPasvSocket.java" package="edu.niu.cs.students.ftp" timestamp="10-Oct-2012 12:32:48">
-        <select from="1748" to="1748"/>
-        <scroll column="156" row="0"/>
-      </file>
-      <file name="src/edu/niu/cs/students/mvstool/tasks/SubmitJobTask.java" package="edu.niu.cs.students.mvstool.tasks" timestamp="10-Oct-2012 13:23:01">
-        <select from="1748" to="1748"/>
-        <scroll column="156" row="0"/>
-      </file>
-      <file name="src/edu/niu/cs/students/mvs/MVSJob.java" package="edu.niu.cs.students.mvs" timestamp="10-Oct-2012 13:47:10">
-        <select from="1748" to="1748"/>
-        <scroll column="156" row="0"/>
+        <select from="1504" to="1504"/>
+        <scroll column="53" row="0"/>
       </file>
       <file name="src/edu/niu/cs/students/mvs/MVSException.java" package="edu.niu.cs.students.mvs" timestamp="10-Oct-2012 13:58:16">
-        <select from="1748" to="1748"/>
-        <scroll column="156" row="0"/>
-      </file>
-      <file name="src/edu/niu/cs/students/mvs/MVSClient.java" package="edu.niu.cs.students.mvs" timestamp="10-Oct-2012 13:59:12">
-        <select from="1748" to="1748"/>
-        <scroll column="156" row="0"/>
-      </file>
-      <file name="src/edu/niu/cs/students/ftp/FTPClient.java" package="edu.niu.cs.students.ftp" timestamp="10-Oct-2012 14:03:41">
-        <select from="1748" to="1748"/>
-        <scroll column="156" row="0"/>
+        <select from="1504" to="1504"/>
+        <scroll column="53" row="0"/>
       </file>
       <file name="src/edu/niu/cs/students/ftp/FTPTempFileOutputStream.java" package="edu.niu.cs.students.ftp" timestamp="10-Oct-2012 14:05:08">
-        <select from="1748" to="1748"/>
-        <scroll column="156" row="0"/>
+        <select from="1504" to="1504"/>
+        <scroll column="53" row="0"/>
       </file>
       <file name="src/edu/niu/cs/students/mvstool/gui/GUIJobLister.java" package="edu.niu.cs.students.mvstool.gui" timestamp="10-Oct-2012 14:08:11">
-        <select from="1748" to="1748"/>
-        <scroll column="156" row="0"/>
+        <select from="1504" to="1504"/>
+        <scroll column="53" row="0"/>
       </file>
-      <file name="src/edu/niu/cs/students/mvstool/gui/ImmutableTableModel.java" package="edu.niu.cs.students.mvstool.gui" timestamp="10-Oct-2012 14:09:42">
-        <select from="1748" to="1748"/>
-        <scroll column="156" row="0"/>
-      </file>
-      <file name="src/edu/niu/cs/students/mvstool/gui/JobListPopupMenu.java" package="edu.niu.cs.students.mvstool.gui" timestamp="10-Oct-2012 14:10:29">
-        <select from="1748" to="1748"/>
-        <scroll column="156" row="0"/>
-      </file>
-      <file name="src/edu/niu/cs/students/mvstool/gui/OutputViewerFrame.java" package="" timestamp="10-Oct-2012 14:10:48">
-        <select from="1748" to="1748"/>
-        <scroll column="156" row="0"/>
+      <file name="src/edu/niu/cs/students/mvstool/gui/OutputViewerFrame.java" package="" timestamp="10-Oct-2012 20:42:11">
+        <select from="1504" to="1504"/>
+        <scroll column="53" row="0"/>
       </file>
       <file name="src/edu/niu/cs/students/mvstool/gui/JobDownloader.java" package="edu.niu.cs.students.mvstool.gui" timestamp="10-Oct-2012 14:10:55">
-        <select from="1748" to="1748"/>
-        <scroll column="156" row="0"/>
-      </file>
-      <file name="src/edu/niu/cs/students/mvstool/Profile.java" package="edu.niu.cs.students.mvstool" timestamp="10-Oct-2012 14:16:59">
-        <select from="1748" to="1748"/>
-        <scroll column="156" row="0"/>
+        <select from="1504" to="1504"/>
+        <scroll column="53" row="0"/>
       </file>
       <file name="src/edu/niu/cs/students/mvs/MVSJobListInput.java" package="edu.niu.cs.students.mvs" timestamp="10-Oct-2012 14:25:05">
-        <select from="1748" to="1748"/>
-        <scroll column="156" row="0"/>
+        <select from="1504" to="1504"/>
+        <scroll column="53" row="0"/>
       </file>
-      <file name="src/edu/niu/cs/students/mvstool/tasks/GetJobListTask.java" package="edu.niu.cs.students.mvstool.tasks" timestamp="10-Oct-2012 14:26:10">
-        <select from="1748" to="1748"/>
-        <scroll column="156" row="0"/>
+      <file name="src/edu/niu/cs/students/mvstool/gui/aux/AboutBox.java" package="edu.niu.cs.students.mvstool.gui.aux" timestamp="10-Oct-2012 18:15:13">
+        <select from="1504" to="1504"/>
+        <scroll column="53" row="0"/>
+      </file>
+      <file name="src/edu/niu/cs/students/mvstool/gui/SetLookAndFeel.java" package="edu.niu.cs.students.mvstool.gui" timestamp="10-Oct-2012 18:30:45">
+        <select from="1504" to="1504"/>
+        <scroll column="53" row="0"/>
+      </file>
+      <file name="src/edu/niu/cs/students/mvstool/gui/main/JobListPopupMenu.java" package="edu.niu.cs.students.mvstool.gui.main" timestamp="10-Oct-2012 18:40:46">
+        <select from="1504" to="1504"/>
+        <scroll column="53" row="0"/>
+      </file>
+      <file name="src/edu/niu/cs/students/mvstool/gui/main/ConnectionPanel.java" package="edu.niu.cs.students.mvstool.gui.main" timestamp="10-Oct-2012 19:00:38">
+        <select from="1504" to="1504"/>
+        <scroll column="53" row="0"/>
+      </file>
+      <file name="src/edu/niu/cs/students/mvstool/gui/main/MainWindow.java" package="edu.niu.cs.students.mvstool.gui.main" timestamp="10-Oct-2012 19:08:01">
+        <select from="1504" to="1504"/>
+        <scroll column="53" row="0"/>
+      </file>
+      <file name="src/edu/niu/cs/students/mvstool/gui/main/JobListPanel.java" package="edu.niu.cs.students.mvstool.gui.main" timestamp="10-Oct-2012 20:54:26">
+        <select from="1504" to="1504"/>
+        <scroll column="53" row="0"/>
+      </file>
+      <file name="src/edu/niu/cs/students/mvs/MVSClient.java" package="edu.niu.cs.students.mvs" timestamp="10-Oct-2012 19:32:58">
+        <select from="1504" to="1504"/>
+        <scroll column="53" row="0"/>
+      </file>
+      <file name="src/edu/niu/cs/students/mvstool/Profile.java" package="edu.niu.cs.students.mvstool" timestamp="10-Oct-2012 19:35:09">
+        <select from="1504" to="1504"/>
+        <scroll column="53" row="0"/>
+      </file>
+      <file name="src/edu/niu/cs/students/ftp/FTPClient.java" package="edu.niu.cs.students.ftp" timestamp="10-Oct-2012 20:03:24">
+        <select from="1504" to="1504"/>
+        <scroll column="53" row="0"/>
+      </file>
+      <file name="src/edu/niu/cs/students/mvs/MVSJob.java" package="edu.niu.cs.students.mvs" timestamp="10-Oct-2012 19:41:39">
+        <select from="1504" to="1504"/>
+        <scroll column="53" row="0"/>
+      </file>
+      <file name="src/edu/niu/cs/students/mvstool/gui/main/JobListTableModel.java" package="edu.niu.cs.students.mvstool.gui.main" timestamp="10-Oct-2012 20:06:42">
+        <select from="1504" to="1504"/>
+        <scroll column="53" row="0"/>
+      </file>
+      <file name="src/edu/niu/cs/students/mvstool/tasks/GetJobOutputTask.java" package="edu.niu.cs.students.mvstool.tasks" timestamp="10-Oct-2012 20:53:57">
+        <select from="1504" to="1504"/>
+        <scroll column="53" row="0"/>
+      </file>
+      <file name="src/edu/niu/cs/students/mvstool/tasks/SubmitJobTask.java" package="edu.niu.cs.students.mvstool.tasks" timestamp="10-Oct-2012 22:21:11">
+        <select from="1504" to="1504"/>
+        <scroll column="53" row="0"/>
       </file>
     </source>
     <included/>

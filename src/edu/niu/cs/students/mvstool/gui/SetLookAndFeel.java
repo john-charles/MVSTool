@@ -23,7 +23,7 @@ package edu.niu.cs.students.mvstool.gui;
 import javax.swing.UIManager;
 
 
-import edu.niu.cs.students.mvstool.ConnectionProfile;
+import edu.niu.cs.students.mvstool.Profile;
 
 class SetLookAndFeel {
   
@@ -43,7 +43,7 @@ class SetLookAndFeel {
   
   public static void set(){
     
-    ConnectionProfile profile = ConnectionProfile.getConnectionProfile();
+    Profile profile = Profile.getCurrentProfile();
     
     /* The gtk look and feel looks aweful on kde based systems...
      * this lets the user specify in their configuration file

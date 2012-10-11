@@ -2,11 +2,11 @@ package edu.niu.cs.students.task;
 
 public abstract class Task {
   
-  public static void fireTask(final Task task){
+  public static void fire(final Task task){
     
     new Thread(new Runnable(){
       
-      public void run(){ 
+      public void run(){
         
         try {
           
@@ -14,6 +14,7 @@ public abstract class Task {
           task.success();
           
         } catch(Exception e){
+          
           task.failure(e);
         }
         
