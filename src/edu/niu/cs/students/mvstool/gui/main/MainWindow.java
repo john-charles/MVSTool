@@ -33,7 +33,7 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
 import edu.niu.cs.students.mvstool.gui.aux.AboutBox;
-//import edu.niu.cs.students.mvstool.gui.SetLookAndFeel;
+import edu.niu.cs.students.mvstool.gui.SetLookAndFeel;
 import edu.niu.cs.students.mvstool.gui.main.JobListPanel;
 import edu.niu.cs.students.mvstool.gui.main.ConnectionPanel;
 import edu.niu.cs.students.mvstool.gui.main.JobListTableModel;
@@ -141,7 +141,7 @@ public class MainWindow extends JFrame {
       "Please address comments questions to: \n" +
       "    John-Charles D. Sokolow <z1552897@students.niu.edu>";
     
-    //SetLookAndFeel.set();
+    SetLookAndFeel.set();
     
     SwingUtilities.invokeLater(new Runnable() {
       public void run(){

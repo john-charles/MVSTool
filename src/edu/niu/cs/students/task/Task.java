@@ -15,7 +15,9 @@ public abstract class Task {
           
         } catch(Exception e){
           
+          e.printStackTrace();
           task.failure(e);
+        
         }
         
       }

@@ -4,9 +4,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import edu.niu.cs.students.netio.LineInput;
+import edu.niu.cs.students.netio.CRLFLineInput;
+
 import edu.niu.cs.students.ftp.FTPClient;
 import edu.niu.cs.students.ftp.FTPException;
 
+import edu.niu.cs.students.mvs.ASAParser;
 import edu.niu.cs.students.mvs.MVSJobListInput;
 
 public class MVSClient extends FTPClient {
@@ -54,13 +58,13 @@ public class MVSClient extends FTPClient {
     
   }
   
-  public InputStream getJob(MVSJob job)
+  public LineInput getJob(MVSJob job)
     throws IOException, FTPException, MVSException {
     
     goodJob(job);    
     setModeJES();
     
-    return getFile(job.getID(), 'A');
+    return new ASAParser(new CRLFLineInput(getFile(job.getID(), 'A')));
     
   }
   

@@ -25,7 +25,7 @@ import javax.swing.UIManager;
 
 import edu.niu.cs.students.mvstool.Profile;
 
-class SetLookAndFeel {
+public class SetLookAndFeel {
   
   private static void setLNF(String name){
     

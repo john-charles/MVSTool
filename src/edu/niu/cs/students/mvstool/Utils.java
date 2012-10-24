@@ -25,6 +25,9 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
+
+import edu.niu.cs.students.netio.LineInput;
 
 /* Catch all class for things that are needed but don't fit anywhere
  * else! */
@@ -88,6 +91,20 @@ public final class Utils {
       
       out.write(buffer, 0, read);
       read = in.read(buffer);
+      
+    }
+    
+  }
+  
+  public static void copyLines(LineInput in, OutputStream out)
+    throws IOException {
+    
+    String line = in.recv();
+    
+    while(line != null){
+      
+      out.write(line.getBytes(), 0, line.length());
+      line = in.recv();
       
     }
     

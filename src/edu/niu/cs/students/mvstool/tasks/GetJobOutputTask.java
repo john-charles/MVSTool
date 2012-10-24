@@ -32,6 +32,8 @@ import java.io.FileOutputStream;
 
 import edu.niu.cs.students.task.Task;
 
+import edu.niu.cs.students.netio.LineInput;
+
 import edu.niu.cs.students.mvs.MVSJob;
 import edu.niu.cs.students.mvs.MVSClient;
 
@@ -58,9 +60,9 @@ public class GetJobOutputTask extends Task {
     MVSClient client = Profile.getCurrentProfile().getMVSClient();
     
     OutputStream out = new FileOutputStream(file);
-    InputStream in = client.getJob(job);
+    LineInput in = client.getJob(job);
     
-    Utils.copyStream(in, out);
+    Utils.copyLines(in, out);
     
     in.close();
     out.close();
