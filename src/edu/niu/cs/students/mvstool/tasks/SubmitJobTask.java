@@ -21,25 +21,25 @@
 package edu.niu.cs.students.mvstool.tasks;
 
 import java.io.File;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.FileInputStream;
+//import java.io.InputStream;
+//import java.io.OutputStream;
+//import java.io.FileInputStream;
 
 import edu.niu.cs.students.ftp.FTPClient;
-import edu.niu.cs.students.ftp.FTPException;
+//import edu.niu.cs.students.ftp.FTPException;
 
 import edu.niu.cs.students.task.Task;
 
 
 public class SubmitJobTask extends Task {
   
-  private File file;
-  private FTPClient ftp;
+//  private File file;
+  //private FTPClient ftp;
   
   public SubmitJobTask(FTPClient ftp, File file){
     
-    this.ftp = ftp;
-    this.file = file;
+//    this.ftp = ftp;
+//    this.file = file;
     
   }
   

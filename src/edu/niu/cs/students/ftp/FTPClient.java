@@ -26,12 +26,10 @@ import java.net.Socket;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.PushbackInputStream;
-//import java.io.OutputStream;
+
 
 import edu.niu.cs.students.netio.LineInput;
 import edu.niu.cs.students.netio.LineOutput;
-import edu.niu.cs.students.netio.LFLineInput;
 import edu.niu.cs.students.netio.CRLFLineInput;
 import edu.niu.cs.students.netio.CRLFLineOutput;
 
@@ -49,7 +47,7 @@ public class FTPClient {
   
   private Socket serverconn;
   
-  private LineInput  serverrecv;
+  private LineInput  serverrecv;  
   private LineOutput serversend;
   
   /* Constructs a new ftp client instance, connecting it to the 
@@ -145,20 +143,30 @@ public class FTPClient {
   public String[] finishTransfer()
     throws IOException, FTPException {
     
-    LinkedList<String> resps = new LinkedList<String>();
+    synchronized(this){
     
-    String resp = recv();
-    
-    while(resp.startsWith("250-")){
+      LinkedList<String> resps = new LinkedList<String>();
+      
+      String resp = recv();
+      
+      while(resp.startsWith("250-")){
+        
+        resps.add(resp);
+        resp = recv();
+        
+      }
       
       resps.add(resp);
-      resp = recv();
       
+      /* This seems like a type cast should work, but whateves
+       * I'm just going to make it work here! */
+      String[] r = new String[resps.size()];
+      int i = 0;
+      for(String s: resps)
+        r[i++] = s;
+      return r;
+    
     }
-    
-    resps.add(resp);
-    
-    return (String[])resps.toArray();
     
   }     
     
@@ -215,18 +223,28 @@ public class FTPClient {
    * passive socket! */
   private FTPPasvSocket getPasvSocket() throws IOException, FTPException {
     
-    String resp = exec("PASV");
-    
-    if(resp.startsWith("227")){
+    synchronized(this){
       
-      return new FTPPasvSocket(resp);
+      String resp = exec("EPSV");
       
-    } else {
-      
-      throw new FTPException(resp.trim());
+      if(!resp.startsWith("229")){
+                
+        resp = exec("PASV");
+        
+      }
+         
+      if(resp.startsWith("227") || resp.startsWith("229")){
+        
+        return new FTPPasvSocket(resp);
+        
+      } else {
+        
+        throw new FTPException(resp.trim());
+        
+      }
       
     }
-    
+        
   }
   
   
@@ -361,7 +379,7 @@ public class FTPClient {
   
   /* Test method, to test this class while it's in development! */
   public static void main(String[] args) throws Exception {
-    //edu.niu.cs.students.mvstool.gui.MainFrame.main(args);   
+    edu.niu.cs.students.mvstool.gui.main.MainWindow.main(args);   
   }
 
 

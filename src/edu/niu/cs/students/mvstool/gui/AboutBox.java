@@ -1,4 +1,3 @@
-package edu.niu.cs.students.mvstool.gui;
 /***********************************************************************
  * MVSTool                                                             *
  *                                                                     *
@@ -19,6 +18,7 @@ package edu.niu.cs.students.mvstool.gui;
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 *  
  * USA                                                                 *
  ***********************************************************************/
+package edu.niu.cs.students.mvstool.gui;
 
 import javax.swing.JPanel;
 import javax.swing.JFrame;
@@ -26,7 +26,7 @@ import javax.swing.JLabel;
 import java.awt.BorderLayout;
 import javax.swing.BorderFactory;
 
-class AboutBox extends JFrame {
+public class AboutBox extends JFrame {
   
   public AboutBox(){
     

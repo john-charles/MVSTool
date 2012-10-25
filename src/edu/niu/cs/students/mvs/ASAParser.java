@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.util.Stack;
 
 import edu.niu.cs.students.netio.LineInput;
-import edu.niu.cs.students.netio.CRLFLineInput;
 
 public class ASAParser implements LineInput {
   

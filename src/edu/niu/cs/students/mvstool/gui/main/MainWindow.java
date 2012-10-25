@@ -32,7 +32,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
-import edu.niu.cs.students.mvstool.gui.aux.AboutBox;
+import edu.niu.cs.students.mvstool.gui.AboutBox;
 import edu.niu.cs.students.mvstool.gui.SetLookAndFeel;
 import edu.niu.cs.students.mvstool.gui.main.JobListPanel;
 import edu.niu.cs.students.mvstool.gui.main.ConnectionPanel;

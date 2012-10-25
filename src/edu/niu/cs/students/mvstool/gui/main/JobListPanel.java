@@ -20,8 +20,6 @@
  ***********************************************************************/
 package edu.niu.cs.students.mvstool.gui.main;
 
-import java.util.List;
-
 import java.awt.BorderLayout;
 
 import java.awt.event.MouseEvent;
@@ -35,16 +33,11 @@ import javax.swing.JScrollPane;
 
 import edu.niu.cs.students.task.Task;
 
-import edu.niu.cs.students.mvstool.Profile;
 
-//import edu.niu.cs.students.mvstool.gui.GUIJobLister;
+
 import edu.niu.cs.students.mvstool.gui.main.JobListPopupMenu;
 import edu.niu.cs.students.mvstool.gui.main.JobListTableModel;
 
-//import edu.niu.cs.students.mvstool.ftp.FTPClient;
-
-import edu.niu.cs.students.mvs.MVSClient;
-//import edu.niu.cs.students.mvstool.mvsftp.MVSJobDownloader;
 import edu.niu.cs.students.mvs.MVSJob;
 
 import edu.niu.cs.students.mvstool.tasks.GetJobOutputTask;

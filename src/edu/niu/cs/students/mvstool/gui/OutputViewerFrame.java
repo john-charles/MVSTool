@@ -43,15 +43,14 @@ import javax.swing.text.DefaultHighlighter.DefaultHighlightPainter;
 
 import java.awt.Font;
 import java.awt.Color;
-import java.awt.Rectangle;
+
 import java.awt.BorderLayout;
-import java.awt.GridBagLayout;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowEvent;
-import java.awt.GridBagConstraints;
 
 
-import java.awt.event.ActionEvent;
+
 import java.awt.event.WindowAdapter;
 import java.awt.event.ActionListener;
 

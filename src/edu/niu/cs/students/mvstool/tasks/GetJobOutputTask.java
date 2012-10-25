@@ -20,13 +20,7 @@
  ***********************************************************************/
 package edu.niu.cs.students.mvstool.tasks;
 
-import javax.swing.JPanel;
-import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
-
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.FileOutputStream;
 
@@ -67,7 +61,7 @@ public class GetJobOutputTask extends Task {
     in.close();
     out.close();
     
-    Profile.getCurrentProfile().putMVSClient(client);
+    client.finishTransfer();
     
     
   }

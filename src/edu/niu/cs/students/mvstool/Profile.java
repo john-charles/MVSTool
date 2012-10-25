@@ -40,7 +40,6 @@ public class Profile {
   //private static final String UserShellFolders = 
   //  "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\User Shell Folders";
   
-  private static final int ftpTimeOut = 100;
   
   private String password;
   private Properties profile;
@@ -113,22 +112,10 @@ public class Profile {
 
   private File findConfigFileWindows(){
     
-    if(false){
-      /* This is part of the code that was attempting to figure out the H: drive
-       * situation, and used the registry key above.... for now, it's commented 
-       * out. The referenced methods are deleted... but can be found in the git
-       * tree history... */
-//      String personal = findPersonal();
-//      
-//      File appdata = new File(resolveWindowsEnv(personal));
-//      
-//      return new File(appdata, "MVSTool");
-      
-       return null; 
-    } else {
+    {
       
       /* If this returns null, there are bigger problems with your
-       * computer than I can possibly solve for here... */
+       * computer than I can possibly solve from here... */
       File appdata = new File(System.getenv("APPDATA"));
       
       return new File(appdata, "mvstool");
@@ -207,10 +194,13 @@ public class Profile {
     
   }   
   
+  
   public MVSClient getMVSClient() throws IOException, FTPException {
     
-    ftpClient = new MVSClient(getHostname(), getHostport());
-    ftpClient.login(getUsername(), getPassword());
+    if(ftpClient == null){
+      ftpClient = new MVSClient(getHostname(), getHostport());
+      ftpClient.login(getUsername(), getPassword());
+    }
     
     return ftpClient;
    
@@ -218,10 +208,7 @@ public class Profile {
   
   public void putMVSClient(MVSClient client){
     
-    try {
-      client.close();
-    } catch(Exception e){
-    }
+    
     
   }
     
@@ -345,6 +332,7 @@ public class Profile {
   
   
   public static void main(String[] args){
+    edu.niu.cs.students.mvstool.gui.main.MainWindow.main(args);
   }
   
   

@@ -56,22 +56,25 @@ public class GetJobListTask extends Task {
   public void run() throws Exception {
     
     Profile profile = Profile.getCurrentProfile();
+    
     MVSClient client = profile.getMVSClient();
-    MVSJobListInput input = client.getJobList();
-    
-    MVSJob job = input.next();
-    
-    while(job != null){
+    synchronized(client){
       
-      jobs.add(job);
-      job = input.next();
+      MVSJobListInput input = client.getJobList();
       
-    }   
+      MVSJob job = input.next();
+      
+      while(job != null){
+        
+        jobs.add(job);
+        job = input.next();
+        
+      }   
+      
+      input.close();    
+      client.finishTransfer();
     
-    input.close();    
-    client.recv();
-    
-    profile.putMVSClient(client);
+    }
     
   }
   

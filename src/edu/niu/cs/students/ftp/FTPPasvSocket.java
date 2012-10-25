@@ -29,7 +29,11 @@ public class FTPPasvSocket extends Socket {
   public FTPPasvSocket(String pasvResponse) throws IOException {
     super();
     
-    connect(parsePASVAddress(pasvResponse));
+    if(pasvResponse.startsWith("227"))
+      connect(parsePASVAddress(pasvResponse));
+    else 
+      connect(parse229(pasvResponse));
+    
     
   }
   
@@ -76,6 +80,18 @@ public class FTPPasvSocket extends Socket {
     port = (port1 * 256) + port2;
     
     return new InetSocketAddress(hostname, port);
+    
+  }
+  
+  private InetSocketAddress parse229(String str){
+    
+    String portStr = str.replace("229 Entering Extended Passive Mode (|||","");
+    portStr = portStr.replace("|)","");
+    
+    /* This is a bad bad bad bad thing, I just need it working now, so
+     * fix it asap... */
+    
+    return new InetSocketAddress("zos.kctr.marist.edu", Integer.parseInt(portStr.trim()));
     
   }
   

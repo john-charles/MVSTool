@@ -1,7 +1,6 @@
 package edu.niu.cs.students.mvs;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
 
 import edu.niu.cs.students.netio.LineInput;
