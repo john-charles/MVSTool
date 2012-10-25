@@ -306,6 +306,27 @@ public class Profile {
     
   }
   
+  private String lastJobKey = "LastJobPath";
+  
+  public void setLastJob(File lastJob){
+    
+    profile.setProperty(lastJobKey, lastJob.toString());
+    saveProfile();
+    
+  }
+  
+  public File getLastJob(){
+    
+    String fileString = profile.getProperty(lastJobKey);
+    if(fileString == null){
+      return null;
+    } else {
+      return new File(fileString);
+    }
+    
+  }
+    
+  
   private static final String dontUseGTKLNF = "UseGTKLookAndFeel";
   /* This is all about allowing the user to disable the GTK Look
    * and Feel if it doesn't fit with their desktop...

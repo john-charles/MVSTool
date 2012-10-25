@@ -34,6 +34,7 @@ import javax.swing.SwingUtilities;
 
 import edu.niu.cs.students.mvstool.gui.AboutBox;
 import edu.niu.cs.students.mvstool.gui.SetLookAndFeel;
+import edu.niu.cs.students.mvstool.gui.sub.SubmitJobPanel;
 import edu.niu.cs.students.mvstool.gui.main.JobListPanel;
 import edu.niu.cs.students.mvstool.gui.main.ConnectionPanel;
 import edu.niu.cs.students.mvstool.gui.main.JobListTableModel;
@@ -56,6 +57,7 @@ public class MainWindow extends JFrame {
     
     getContentPane().add(new ConnectionPanel(model), BorderLayout.NORTH);
     getContentPane().add(new JobListPanel(model), BorderLayout.CENTER);
+    getContentPane().add(new SubmitJobPanel(), BorderLayout.SOUTH);
     
   }
   

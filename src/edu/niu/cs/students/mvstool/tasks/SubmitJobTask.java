@@ -21,37 +21,59 @@
 package edu.niu.cs.students.mvstool.tasks;
 
 import java.io.File;
-//import java.io.InputStream;
-//import java.io.OutputStream;
-//import java.io.FileInputStream;
-
-import edu.niu.cs.students.ftp.FTPClient;
-//import edu.niu.cs.students.ftp.FTPException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.FileInputStream;
 
 import edu.niu.cs.students.task.Task;
+
+import edu.niu.cs.students.mvs.MVSClient;
+import edu.niu.cs.students.ftp.FTPException;
+
+import edu.niu.cs.students.mvstool.Utils;
+import edu.niu.cs.students.mvstool.Profile;
+
+
 
 
 public class SubmitJobTask extends Task {
   
-//  private File file;
-  //private FTPClient ftp;
+  private File file;
   
-  public SubmitJobTask(FTPClient ftp, File file){
+  public SubmitJobTask(File file){
     
-//    this.ftp = ftp;
-//    this.file = file;
+    this.file = file;
     
   }
   
   public void run() throws Exception {
     
-    //OutputStream jobStream = ftp.putFile();
-    
-    
+    MVSClient mvs = Profile.getCurrentProfile().getMVSClient();
+    InputStream jobInput = new FileInputStream(file);
+        
+    synchronized(mvs){
+      
+      OutputStream jobStream = mvs.subJob();      
+      Utils.copyStream(jobInput, jobStream);
+      
+      jobInput.close();
+      jobStream.close();
+      
+      String[] resps = mvs.finishTransfer();
+      
+      for(int i = 0; i < resps.length; i++){
+        
+        System.out.println(resps[i]);
+        
+      }      
+      
+    }   
     
   }
   
   public void failure(Exception e){
+    
+    e.printStackTrace();
     
   }
   

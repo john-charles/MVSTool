@@ -20,6 +20,9 @@
  ***********************************************************************/
 package edu.niu.cs.students.mvstool.gui.main;
 
+import java.util.List;
+import java.util.LinkedList;
+
 import javax.swing.JTable;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
@@ -82,10 +85,16 @@ class JobListPopupMenu extends JPopupMenu {
       
       public void actionPerformed(ActionEvent e){
         
-        int row = ((JTable)cause.getSource()).getSelectedRow();
-        MVSJob job = tableModel.getJobAt(row);
+        int[] rows = ((JTable)cause.getSource()).getSelectedRows();
+        List<MVSJob> jobs = new LinkedList<MVSJob>();
         
-        Task.fire(new PurgeJobTask(job, tableModel));
+        for(int i = 0; i < rows.length; i++){
+          
+          jobs.add(tableModel.getJobAt(rows[i]));
+        
+        }
+        
+        Task.fire(new PurgeJobTask(jobs, tableModel));
         
       }
       

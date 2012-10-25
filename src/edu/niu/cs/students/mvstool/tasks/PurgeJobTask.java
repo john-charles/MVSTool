@@ -20,6 +20,8 @@
  ***********************************************************************/
 package edu.niu.cs.students.mvstool.tasks;
 
+import java.util.List;
+
 import edu.niu.cs.students.task.Task;
 
 import edu.niu.cs.students.mvs.MVSJob;
@@ -34,12 +36,12 @@ import edu.niu.cs.students.mvstool.gui.main.JobListTableModel;
 
 public class PurgeJobTask extends Task {
   
-  MVSJob job;
+  List<MVSJob> jobs;
   JobListTableModel tableModel;
   
-  public PurgeJobTask(MVSJob job, JobListTableModel tableModel){
+  public PurgeJobTask(List<MVSJob> jobs, JobListTableModel tableModel){
     
-    this.job = job;
+    this.jobs = jobs;
     this.tableModel = tableModel;
     
   }
@@ -48,9 +50,9 @@ public class PurgeJobTask extends Task {
     
     MVSClient client = Profile.getCurrentProfile().getMVSClient();
     
-    client.purgeJob(job);
-    
-    Profile.getCurrentProfile().putMVSClient(client);
+    for(MVSJob job: jobs){
+      client.purgeJob(job);
+    } 
     
   }
   
