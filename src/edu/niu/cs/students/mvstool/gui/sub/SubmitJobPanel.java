@@ -12,7 +12,11 @@ import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.JFileChooser;
 
+import edu.niu.cs.students.task.Task;
 import edu.niu.cs.students.mvstool.Profile;
+import edu.niu.cs.students.mvstool.gui.GUIUtils;
+
+import edu.niu.cs.students.mvstool.tasks.SubmitJobTask;
 
 public class SubmitJobPanel extends JPanel {
   
@@ -80,6 +84,25 @@ public class SubmitJobPanel extends JPanel {
   private JButton buildSubmitButton(){
     
     JButton sub = new JButton("Submit");
+    
+    sub.addActionListener(new ActionListener(){
+      
+      public void actionPerformed(ActionEvent event){
+        
+        if(jobPath == null){
+          
+          GUIUtils.postMessage("Please select a file to be uploaded first!\n" +
+                               "You may use the browse button to select the file!");
+        } else {
+          
+          Task.fire(new SubmitJobTask(jobPath));
+          
+        }
+        
+      }
+      
+    });         
+          
     return sub;
     
   }
