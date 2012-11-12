@@ -302,7 +302,7 @@ public class FTPClient {
     
     String resp = exec(String.format("STOR %s", path));
     
-    if(!resp.startsWith("125")){
+    if(resp.startsWith("125")){
       
       return out;
       

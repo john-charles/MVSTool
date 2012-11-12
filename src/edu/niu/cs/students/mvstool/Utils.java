@@ -82,14 +82,14 @@ public final class Utils {
   public static void copyStream(InputStream in, OutputStream out)
     throws IOException {
     
-    byte[] buffer = new byte[4096];
+    byte[] buffer = new byte[1024];
     
-    int read = in.read(buffer);
+    int read = in.read(buffer, 0, 1024);
     
-    while(read > 0){
+    while(read > -1){
       
       out.write(buffer, 0, read);
-      read = in.read(buffer);
+      read = in.read(buffer, 0, 1024);
       
     }
     

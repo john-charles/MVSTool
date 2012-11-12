@@ -33,12 +33,15 @@ import edu.niu.cs.students.ftp.FTPException;
 import edu.niu.cs.students.mvstool.Utils;
 import edu.niu.cs.students.mvstool.Profile;
 
+import edu.niu.cs.students.mvstool.gui.GUIUtils;
+
 
 
 
 public class SubmitJobTask extends Task {
   
   private File file;
+  private String jobID;
   
   public SubmitJobTask(File file){
     
@@ -53,17 +56,34 @@ public class SubmitJobTask extends Task {
         
     synchronized(mvs){
       
-      OutputStream jobStream = mvs.subJob();      
-      Utils.copyStream(jobInput, jobStream);
+      /* This is very hacky, but let's just make it work... */
+      byte[] job = new byte[(int)file.length()];
+      String jobT;
+      
+      OutputStream jobStream = mvs.subJob(file.getName());
+      
+      jobInput.read(job);
+      jobT = new String(job);
+      jobT.replace("\n","\r\n");
+      jobT.replace("\t", "    ");
+      
+      
+      jobStream.write(jobT.getBytes());
       
       jobInput.close();
       jobStream.close();
       
-      String[] resps = mvs.finishTransfer();
-      
+      String[] resps = mvs.finishTransfer();      
+      /* Pase a response that looks like:
+       * "250-It is known to JES as JOB02192"
+       */
+      String base = "250-It is known to JES as ";
       for(int i = 0; i < resps.length; i++){
         
-        System.out.println(resps[i]);
+        if(resps[i].startsWith(base)){
+          jobID = resps[i].replace(base, "");
+          jobID = jobID.trim();
+        }
         
       }      
       
@@ -78,6 +98,11 @@ public class SubmitJobTask extends Task {
   }
   
   public void success(){
+    
+    String mesg = "Successfully submitted " + file.getName() + 
+      "\nas jes job '" + jobID + "' please click refresh!";
+    
+    GUIUtils.postMessage(mesg);
     
   }
   

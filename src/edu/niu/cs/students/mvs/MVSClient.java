@@ -77,12 +77,12 @@ public class MVSClient extends FTPClient {
     
   }
   
-  public OutputStream subJob()
+  public OutputStream subJob(String name)
     throws IOException, FTPException, MVSException {
     
     setModeJES();
     
-    return putFile("",'A');
+    return putFile(name,'A');
     
   }
     

@@ -34,7 +34,7 @@ import edu.niu.cs.students.mvs.MVSClient;
 import edu.niu.cs.students.mvstool.Utils;
 import edu.niu.cs.students.mvstool.Profile;
 import edu.niu.cs.students.mvstool.gui.GUIUtils;
-import edu.niu.cs.students.mvstool.gui.OutputViewerFrame;
+import edu.niu.cs.students.mvstool.gui.viewer.ViewerWindow;
 
 
 public class GetJobOutputTask extends Task {
@@ -69,7 +69,7 @@ public class GetJobOutputTask extends Task {
   
   public void success(){
     
-    OutputViewerFrame.createOutputViewer(file, job);
+    ViewerWindow.showViewerWindow(file);
     
   }
   

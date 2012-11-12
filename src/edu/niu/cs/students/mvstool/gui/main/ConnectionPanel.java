@@ -38,7 +38,9 @@ import edu.niu.cs.students.mvstool.Profile;
 
 import edu.niu.cs.students.mvstool.gui.main.JobListTableModel;
 
+import edu.niu.cs.students.mvstool.tasks.KeepAliveTask;
 import edu.niu.cs.students.mvstool.tasks.GetJobListTask;
+
 
 class ConnectionPanel extends JPanel {
   
@@ -50,6 +52,8 @@ class ConnectionPanel extends JPanel {
   JPasswordField password;
   
   JobListTableModel model;
+  
+  static boolean has_connected = false;
   
   public ConnectionPanel(JobListTableModel model){
     
@@ -164,6 +168,11 @@ class ConnectionPanel extends JPanel {
         profile.setPassword(password.getText());
         
         Task.fire(new GetJobListTask(model));
+        
+        if(!has_connected){
+          has_connected = true;
+          Task.fire(new KeepAliveTask());
+        }
         
       }
       
