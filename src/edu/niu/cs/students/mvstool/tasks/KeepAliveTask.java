@@ -17,7 +17,10 @@ public class KeepAliveTask extends Task {
      
      try {
        
-       client.noop();
+       synchronized(client){
+         client.noop();
+       }
+       
        Utils.sleep(60);
        
      } catch(Exception e){

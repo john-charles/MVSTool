@@ -53,15 +53,19 @@ public class GetJobOutputTask extends Task {
     
     MVSClient client = Profile.getCurrentProfile().getMVSClient();
     
-    OutputStream out = new FileOutputStream(file);
-    LineInput in = client.getJob(job);
+    synchronized(client){
     
-    Utils.copyLines(in, out);
+      OutputStream out = new FileOutputStream(file);
+      LineInput in = client.getJob(job);
+      
+      Utils.copyLines(in, out);
+      
+      in.close();
+      out.close();
+      
+      client.finishTransfer();
     
-    in.close();
-    out.close();
-    
-    client.finishTransfer();
+    }
     
     
   }
