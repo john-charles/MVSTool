@@ -11,25 +11,12 @@ ABOUT THIS PROGRAM
         
         Delete "purge" mvs job output. (Functional, but only one at a time.)
         
-        Upload "submit" an mvs job. (This code is implemented, but does needs debugging. 
-                As it fails. This was a low priority for me when I originally wrote the 
-                application. I no longer access to the mainframe to do further debugging,
-                but I am available to answer questions of anyone who wishes complete this
-                work.)
+        Upload "submit" an mvs job. (This code is implemented, but does needs debugging. As it fails. This was a low priority for me when I originally wrote the application. I no longer access to the mainframe to do further debugging, but I am available to answer questions of anyone who wishes complete this work.)
                 
 MY VISION FOR THE FUTURE:
     
-    I initially wrote this program while taking a course on mainframe programing at NIU.
-    It is and was my hope that future students at northern could continue maintaining
-    and updating this project into the future, perhaps of their own initutive perhaps
-    with the aid of faculty. This software is a donation to the community and for various
-    reasons I can no longer mantaine it. But if others wish to work on it/improove it
-    and submit patches I am willing to function as a project manager and curate further
-    patches if desired. To that end I am also willing to answer any questions any future
-    contributor might have. My hope is that this project does not die, I am proud of the
-    work herein and I put in substancial effort to make the design as modular and extensable
-    as possible. This could even become a COBOL and IBM 360 Assembler IDE with future 
-    contributions.             
+    I initially wrote this program while taking a course on mainframe programing at NIU. It is and was my hope that future students at northern could continue maintaining and updating this project into the future, perhaps of their own initutive perhaps with the aid of faculty. This software is a donation to the community and for various reasons I can no longer mantaine it. But if others wish to work on it/improove it
+    and submit patches I am willing to function as a project manager and curate further patches if desired. To that end I am also willing to answer any questions any future contributor might have. My hope is that this project does not die, I am proud of the work herein and I put in substancial effort to make the design as modular and extensable as possible. This could even become a COBOL and IBM 360 Assembler IDE with future contributions.             
              
         
 HOW TO COMPILE THIS PROGRAM...
