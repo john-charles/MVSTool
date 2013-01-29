@@ -12,6 +12,8 @@ ABOUT THIS PROGRAM
         Delete "purge" mvs job output. (Functional, but only one at a time.)
         
         Upload "submit" an mvs job. (This code is implemented, but does needs debugging. As it fails. This was a low priority for me when I originally wrote the application. I no longer access to the mainframe to do further debugging, but I am available to answer questions of anyone who wishes complete this work.)
+        
+    This code is released under the terms of the GNU GPLv2.
                 
 MY VISION FOR THE FUTURE:
     
